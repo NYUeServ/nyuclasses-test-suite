@@ -8,11 +8,11 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 
-public class Hooks extends BaseUtil{
+public class Hook extends BaseUtil{
 
     private BaseUtil base;
 
-    public Hooks(BaseUtil base){
+    public Hook(BaseUtil base){
         this.base = base;
     }
 

@@ -1,7 +1,6 @@
 package NYUClassesTests;
 
 import Base.BaseUtil;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,15 +10,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-public class LoginSteps extends BaseUtil{
+public class LoginStep extends BaseUtil{
 
     private BaseUtil base;
 
-    public LoginSteps(BaseUtil base)
+    public LoginStep(BaseUtil base)
     {
         this.base = base;
     }
