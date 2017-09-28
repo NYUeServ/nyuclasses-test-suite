@@ -9,8 +9,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
@@ -59,12 +61,14 @@ public class LoginStep {
     public void startUp()
     {
         System.out.println("=========== INITIALIZE LOGIN TEST ===========");
-        FirefoxDriverManager.getInstance().setup();
-        driver = new FirefoxDriver();
+        // FirefoxDriverManager.getInstance().setup();
+        // driver = new FirefoxDriver();
+        ChromeDriverManager.getInstance().setup();
+        driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
 
         System.out.println("Initializing testing environment");
-        System.out.println("Using driver: Firefox");
+        System.out.println("Using driver: Chrome");
     }
 
     @After
@@ -75,11 +79,13 @@ public class LoginStep {
             //TODO: Take screenshot
             System.out.println(scenario.getName());
         }
-
+        
         System.out.println("Cleaning the environment");
         driver.manage().deleteAllCookies();
         driver.quit();
         System.out.println("=========== LOGIN TEST FINISHED ===========");
+
+        
     }
 
 }
