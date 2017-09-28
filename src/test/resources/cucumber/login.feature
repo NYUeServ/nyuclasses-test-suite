@@ -1,10 +1,12 @@
 Feature: LoginFeature
-  This feature deals with the login functionality of NYU Classes, which is integrated with NYU's Shibboleth
+  This feature deals with the login and logout functionality of Sakai
 
-  Scenario: Login with valid netid and password
+  Scenario: Log in to Sakai
     Given I navigate to the login page
-    And I enter netid and password
-    And I press "_eventId_proceed"
+    When I login as student
     Then I should see NYU Classes logo
+
+  Scenario: Log out of Sakai
+    Given I am logged in
     When I log out
     Then I should see logged out
