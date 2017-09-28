@@ -3,8 +3,8 @@ package sakai.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import sakai.utilities.JSWaiter;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -21,38 +21,41 @@ public class LoginPage extends BasePage {
 
     public HomePage loginAsStudent()
     {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
-        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
-        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
+
+        JSWaiter.waitUntilJQueryReady();
+        WebElement username = driver.findElement(usernameFieldSelector);
+        WebElement password = driver.findElement(passwordFieldSelector);
+        WebElement login = driver.findElement(loginButtonSelector);
 
         username.sendKeys(System.getenv("sakai_student_username"));
         password.sendKeys(System.getenv("sakai_student_password"));
         login.click();
 
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.titleContains("NYU Classes : My Workspace : Overview"));
+        JSWaiter.waitUntilJQueryReady();
+        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }
 
     public HomePage loginAsInstructor()
     {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
-        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
-        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
+        JSWaiter.waitUntilJQueryReady();
+        WebElement username = driver.findElement(usernameFieldSelector);
+        WebElement password = driver.findElement(passwordFieldSelector);
+        WebElement login = driver.findElement(loginButtonSelector);
 
         username.sendKeys(System.getenv("sakai_instructor_username"));
         password.sendKeys(System.getenv("sakai_instructor_password"));
         login.click();
 
+        JSWaiter.waitUntilJQueryReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }
 
     public void checkForLoggedOutBanner()
     {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(logoutBannerSelector)).isDisplayed());
+        JSWaiter.waitUntilJQueryReady();
+        WebElement logoutBanner = driver.findElement(logoutBannerSelector);
+        assertTrue(logoutBanner.isDisplayed());
     }
 }
