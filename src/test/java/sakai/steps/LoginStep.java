@@ -16,6 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
+import sakai.utilities.JSWaiter;
 
 public class LoginStep {
 
@@ -66,6 +67,7 @@ public class LoginStep {
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
+        JSWaiter.setDriver(driver);
 
         System.out.println("Initializing testing environment");
         System.out.println("Using driver: Chrome");
