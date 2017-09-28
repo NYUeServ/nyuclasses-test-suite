@@ -11,6 +11,7 @@ import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import sakai.pages.BasePage;
@@ -65,7 +66,9 @@ public class LoginStep {
         // FirefoxDriverManager.getInstance().setup();
         // driver = new FirefoxDriver();
         ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
+        driver = new ChromeDriver(options);
         driver.manage().deleteAllCookies();
         JSWaiter.setDriver(driver);
 
