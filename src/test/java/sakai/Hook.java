@@ -1,6 +1,6 @@
-package NYUClassesTests;
+package sakai;
 
-import Base.BaseUtil;
+import containers.BaseUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -34,14 +34,13 @@ public class Hook extends BaseUtil{
     {
         if(scenario.isFailed())
         {
-            //Take screenshot
+            //TODO: Take screenshot
             System.out.println(scenario.getName());
         }
-        //System.out.println("Closing the browser");
-
-        //driver.close();
 
         System.out.println("Cleaning the environment");
+        base.driver.manage().deleteAllCookies();
+        base.driver.quit();
         System.out.println("=========== TEST FINISHED ===========");
     }
 

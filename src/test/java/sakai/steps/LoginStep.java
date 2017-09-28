@@ -1,6 +1,6 @@
-package NYUClassesTests;
+package sakai.steps;
 
-import Base.BaseUtil;
+import containers.BaseUtil;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -24,11 +24,11 @@ public class LoginStep extends BaseUtil{
         base.driver.get("https://newclasses.nyu.edu");
     }
 
-    @And("^I enter ([^\"]*) and ([^\"]*)$")
-    public void iEnterNetidAndPassword(String netid, String password) throws Throwable {
+    @And("^I enter netid and password$")
+    public void iEnterNetidAndPassword() throws Throwable {
         WebDriverWait wait = new WebDriverWait(base.driver,10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("j_username"))).sendKeys(netid);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("j_password"))).sendKeys(password);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("j_username"))).sendKeys(System.getenv("sakai_student_username"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("j_password"))).sendKeys(System.getenv("sakai_student_password"));
     }
 
     @And("^I press \"([^\"]*)\"$")
