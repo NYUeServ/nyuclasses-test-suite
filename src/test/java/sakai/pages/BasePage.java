@@ -2,7 +2,6 @@ package sakai.pages;
 
 import org.openqa.selenium.WebDriver;
 import sakai.utilities.JSWaiter;
-
 import static org.junit.Assert.assertEquals;
 
 public class BasePage {
