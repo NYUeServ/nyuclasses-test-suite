@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+    cucumber:
+        build: ./
+        env_file:
+            - config.env
+        entrypoint: mvn clean test
