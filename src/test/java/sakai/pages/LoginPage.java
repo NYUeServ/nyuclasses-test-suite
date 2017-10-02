@@ -3,6 +3,8 @@ package sakai.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.utilities.JSWaiter;
 import sakai.utilities.SakaiLogger;
 import sakai.utilities.User;
@@ -26,9 +28,10 @@ public class LoginPage extends BasePage {
     {
         SakaiLogger.logInfo("Finding Web Elements on page...");
         JSWaiter.waitUntilJQueryReady();
-        WebElement username = driver.findElement(usernameFieldSelector);
-        WebElement password = driver.findElement(passwordFieldSelector);
-        WebElement login = driver.findElement(loginButtonSelector);
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
+        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
+        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
 
         User student = UserFactory.getValidStudent();
         SakaiLogger.logInfo("Logging into Student account with username: " + student.getUsername() + ", password: " + student.getPassword());
@@ -46,9 +49,10 @@ public class LoginPage extends BasePage {
     {
         SakaiLogger.logInfo("Finding Web Elements on page...");
         JSWaiter.waitUntilJQueryReady();
-        WebElement username = driver.findElement(usernameFieldSelector);
-        WebElement password = driver.findElement(passwordFieldSelector);
-        WebElement login = driver.findElement(loginButtonSelector);
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
+        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
+        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
 
         User instructor = UserFactory.getValidInstructor();
         SakaiLogger.logInfo("Logging into Instructor account with username: " + instructor.getUsername() + ", password: " + instructor.getPassword());
@@ -65,7 +69,8 @@ public class LoginPage extends BasePage {
     public void checkForLoggedOutBanner()
     {
         JSWaiter.waitUntilJQueryReady();
-        WebElement logoutBanner = driver.findElement(logoutBannerSelector);
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement logoutBanner = wait.until(ExpectedConditions.presenceOfElementLocated(logoutBannerSelector));
         assertTrue(logoutBanner.isDisplayed());
     }
 }
