@@ -8,6 +8,12 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import sakai.utilities.Configuration;
 import sakai.utilities.SakaiLogger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,6 +23,13 @@ import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
 import sakai.utilities.JSWaiter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.fail;
 
 public class LoginStep {
 
@@ -59,20 +72,42 @@ public class LoginStep {
     }
 
     @Before
-    public void startUp()
+    public void startUp(Scenario scenario)
     {
-        SakaiLogger.logInfo("=========== INITIALIZE LOGIN TEST ===========");
-        // FirefoxDriverManager.getInstance().setup();
-        // driver = new FirefoxDriver();
-        ChromeDriverManager.getInstance().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
-        driver = new ChromeDriver(options);
-        driver.manage().deleteAllCookies();
-        JSWaiter.setDriver(driver);
+        SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+        Configuration.setPlatform(System.getenv("sakai_browser"));
 
-        SakaiLogger.logInfo("Initializing testing environment\n");
-        SakaiLogger.logInfo("Using driver: Chrome\n");
+        if(Configuration.getPlatform().equalsIgnoreCase("chrome"))
+        {
+            SakaiLogger.logInfo("Initializing testing environment");
+            SakaiLogger.logInfo("Using driver: Chrome");
+            ChromeDriverManager.getInstance().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("headless");
+            driver = new ChromeDriver(options);
+            driver.manage().deleteAllCookies();
+            JSWaiter.setDriver(driver);
+        }
+        else if(Configuration.getPlatform().equalsIgnoreCase("firefox"))
+        {
+            SakaiLogger.logInfo("Initializing testing environment");
+            SakaiLogger.logInfo("Using driver: Firefox");
+            FirefoxDriverManager.getInstance().setup();
+            FirefoxBinary binary = new FirefoxBinary();
+            binary.addCommandLineOptions("--headless");
+            FirefoxOptions options = new FirefoxOptions();
+            options.setBinary(binary);
+            driver = new FirefoxDriver(options);
+            driver = new FirefoxDriver();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().deleteAllCookies();
+            JSWaiter.setDriver(driver);
+        }
+        else
+        {
+            SakaiLogger.logInfo("No compatible browser environment found, your browser specification is: " + Configuration.getPlatform());
+            fail("No compatible browser environment found");
+        }
     }
 
     @After
@@ -81,16 +116,21 @@ public class LoginStep {
         if(scenario.isFailed())
         {
             //TODO: Take screenshot
-            SakaiLogger.logErr(scenario.getName());
-            SakaiLogger.logErr("Scenario failed =(");
+            SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
+            File screencap = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            try {
+                FileUtils.copyFile(screencap, new File("target/screencap/" + scenario.getName() + "_" + new Date() + ".png"));
+            }
+            catch(IOException e)
+            {
+
+            }
         }
 
         SakaiLogger.logInfo("Cleaning the environment");
         driver.manage().deleteAllCookies();
         driver.quit();
-        SakaiLogger.logInfo("=========== LOGIN TEST FINISHED ===========");
-
-        
+        SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
     }
 
 }

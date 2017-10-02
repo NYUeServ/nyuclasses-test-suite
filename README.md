@@ -18,12 +18,14 @@ Chrome Installation
 
 Running the Tests
 ---
-First, export your test account credentials
+First, export your test account credentials and the environment you want to test in. We made the browser configuration
+an environment variable because it is easier for us to dockerize and run in parallel.
 ```bash
-$ export sakai_student_username=<student tester username>
-$ export sakai_student_password=<student tester password>
-$ export sakai_instructor_username=<instructor tester username>
-$ export sakai_instructor_password=<instructor tester password>
+$ export sakai_student_username="<student tester username>"
+$ export sakai_student_password="<student tester password>"
+$ export sakai_instructor_username="<instructor tester username>"
+$ export sakai_instructor_password="<instructor tester password>"
+$ export sakai_browser="<browser here, e.g. chrome or firefox>"
 ```
 
 It may be a good idea to test out your environment first before running your test
