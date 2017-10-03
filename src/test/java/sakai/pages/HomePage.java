@@ -20,7 +20,7 @@ public class HomePage extends BasePage{
     private final By newFeatureAcknowledgeSelector = By.id("popup-acknowledged-button");
     private final By profileSelector = By.className("Mrphs-userNav__submenuitem--username");
     private final By logoutButtonSelector = By.id("loginLink1");
-    private final By widgetTitleSelector = By.className("Mrphs-toolTitleNav__title");
+    private final By myProfileNameSelector = By.id("profileHeadingName");
 
     public HomePage(WebDriver driver) { super(driver); }
 
@@ -34,20 +34,28 @@ public class HomePage extends BasePage{
     public void checkForOverviewWidget(String widgetName)
     {
         WebDriverWait wait = new WebDriverWait(driver,10);
-        List<WebElement> elements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(widgetTitleSelector));
-        boolean found = false;
-        for(WebElement e : elements)
-        {
-            SakaiLogger.logInfo("Currently checking element with innerText of " + e.getAttribute("innerText"));
-            if(widgetName.equalsIgnoreCase(e.getAttribute("innerText")))
-            {
-                found = true;
-            }
-        }
-        if(!found)
-        {
-            fail("Widget of name " + widgetName + " was not found");
-        }
+        By widgetTitleSelector = By.xpath("//div/nav/h2[. = '" + widgetName + "']");
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(widgetTitleSelector));
+        assertEquals(widgetName, element.getAttribute("innerText"));
+    }
+
+    public void clickOnTool(String toolName)
+    {
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        By toolNameSelector = By.cssSelector("a[title=\"" + toolName + "\"]");
+        WebElement tool = wait.until(ExpectedConditions.presenceOfElementLocated(toolNameSelector));
+        tool.click();
+    }
+
+    public void checkProfileName(String name)
+    {
+        WebElement nameElement = driver.findElement(myProfileNameSelector);
+        assertEquals(name, nameElement.getText());
+    }
+
+    public void checkTabVisibility(String tabName)
+    {
+        
     }
 
     public void closeNewFeaturePopUp()

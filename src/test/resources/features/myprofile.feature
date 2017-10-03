@@ -3,8 +3,10 @@ Feature: MyProfile
 
   Scenario: My Profile overview
     Given I am logged in
-    When I click on My Profile tool
-    Then I should see My Profile tab with my name "TesterWP F Tester"
+    ## The title of the element is actually "My Profile " with a space at the end, this is not an error
+    When I click on "My Profile " tool
+    Then I should see "My Profile" tab
+     And I should see my name "TesterWP F Tester" under My Profile tab
      And I should see "Pictures" tab
      And I should see "Connections" tab
      And I should see "Messages" tab
