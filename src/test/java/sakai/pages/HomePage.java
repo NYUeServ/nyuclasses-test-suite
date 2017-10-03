@@ -3,7 +3,9 @@ package sakai.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import sakai.utilities.JSWaiter;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import sakai.utilities.PageWaiter;
 
 import static org.junit.Assert.assertTrue;
 
@@ -18,23 +20,33 @@ public class HomePage extends BasePage{
 
     public void checkForSakaiBanner()
     {
-        JSWaiter.waitUntilJQueryReady();
-        WebElement banner = driver.findElement(bannerSelector);
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement banner = wait.until(ExpectedConditions.presenceOfElementLocated(bannerSelector));
         assertTrue(banner.isDisplayed());
     }
 
     public void closeNewFeaturePopUp()
     {
-        JSWaiter.waitUntilJQueryReady();
-        WebElement acknowledge = driver.findElement(newFeatureAcknowledgeSelector);
-        acknowledge.click();
+        PageWaiter.waitUntilPageReady();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
+
+        //Waiting for profile to see if it is enabled
+        //We can assume that if profile is not enabled, the new feature popup exists
+        //If profile is enabled, it is safe to assume that there is no popup
+        if(!profile.isEnabled())
+        {
+            WebElement acknowledge = wait.until(ExpectedConditions.presenceOfElementLocated(newFeatureAcknowledgeSelector));
+            acknowledge.click();
+        }
+
     }
 
     public LoginPage logout()
     {
-        JSWaiter.waitUntilJQueryReady();
-        WebElement profile = driver.findElement(profileSelector);
-        WebElement logout = driver.findElement(logoutButtonSelector);
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
+        WebElement logout = wait.until(ExpectedConditions.presenceOfElementLocated(logoutButtonSelector));
 
         //If profile icon is not clickable, check for what's new popup and close it
         if(!profile.isEnabled())
