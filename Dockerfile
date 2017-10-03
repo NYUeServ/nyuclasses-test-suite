@@ -22,6 +22,10 @@ RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.stor
 	&& chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
 	&& ln -fs /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
+# Firefox
+RUN apt-get update -qqy \
+	&& apt-get -qqy install iceweasel
+
 # Xvfb
 
 RUN apt-get update -qqy \
