@@ -2,7 +2,7 @@
 FROM maven:3.3.9-jdk-8
 
 # Google Chrome
-
+#
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
 	&& echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
 	&& apt-get update -qqy \
@@ -23,8 +23,13 @@ RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.stor
 	&& ln -fs /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
 # Firefox
-RUN apt-get update -qqy \
-	&& apt-get -qqy install iceweasel
+ENV FIREFOX_VERSION 56.0
+ENV FIREFOX_DIR /usr/bin/firefox
+ENV FIREFOX_FILENAME $FIREFOX_DIR/firefox.tar.bz2
+ENV PATH $FIREFOX_DIR:$PATH
+RUN mkdir $FIREFOX_DIR \
+	&& wget -q --continue --output-document $FIREFOX_FILENAME "https://ftp.mozilla.org/pub/firefox/releases/${FIREFOX_VERSION}/linux-x86_64/en-US/firefox-${FIREFOX_VERSION}.tar.bz2" \
+	&& tar -xaf "$FIREFOX_FILENAME" --strip-components=1 --directory "$FIREFOX_DIR"
 
 # Xvfb
 
