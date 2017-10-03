@@ -1,15 +1,21 @@
 package sakai.utilities;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class exists because Selenium WebDriver does not have a built-in Javascript/JQuery wait.
  * This is adapted from https://github.com/swtestacademy/JSWaiter
  */
-public class JSWaiter {
+public class PageWaiter {
 
     private static WebDriver jsWaitDriver;
     private static WebDriverWait jsWait;
@@ -83,16 +89,19 @@ public class JSWaiter {
         if(Configuration.getPlatform().equalsIgnoreCase("chrome"))
         {
             SakaiLogger.logInfo("Chrome Platform: Waiting for jQuery/Javascript on page");
-            JSWaiter.waitUntilJQueryReady();
+            PageWaiter.waitUntilJQueryReady();
         }
         else
         {
-            SakaiLogger.logInfo("Firefox Platform: Sleeping thread for page detection");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SakaiLogger.logInfo("Firefox Platform: Waiting for page redirection to settle");
+            DocumentSettleCondition<Boolean> settleCondition = new DocumentSettleCondition<>(
+                    ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.forwarding")));
+
+            new FluentWait<WebDriver>(jsWaitDriver)
+                    .withTimeout(30, TimeUnit.SECONDS)
+                    .pollingEvery(settleCondition.getSettleTime(), TimeUnit.MILLISECONDS)
+                    .ignoring(WebDriverException.class)
+                    .until(settleCondition);
         }
     }
 

@@ -36,7 +36,7 @@ public class LoginPage extends BasePage {
         login.click();
 
         SakaiLogger.logInfo("Login request submitted");
-        JSWaiter.waitUntilPageReady();
+        PageWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }
@@ -56,14 +56,14 @@ public class LoginPage extends BasePage {
         login.click();
 
         SakaiLogger.logInfo("Login request submitted");
-        JSWaiter.waitUntilPageReady();
+        PageWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }
 
     public void checkForLoggedOutBanner()
     {
-        JSWaiter.waitUntilJQueryReady();
+        PageWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement logoutBanner = wait.until(ExpectedConditions.presenceOfElementLocated(logoutBannerSelector));
         assertTrue(logoutBanner.isDisplayed());

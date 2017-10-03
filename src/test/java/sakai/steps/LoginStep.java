@@ -22,12 +22,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
-import sakai.utilities.JSWaiter;
+import sakai.utilities.PageWaiter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
@@ -86,7 +85,7 @@ public class LoginStep {
             options.addArguments("headless");
             driver = new ChromeDriver(options);
             driver.manage().deleteAllCookies();
-            JSWaiter.setDriver(driver);
+            PageWaiter.setDriver(driver);
         }
         else if(Configuration.getPlatform() != null && Configuration.getPlatform().equalsIgnoreCase("firefox"))
         {
@@ -98,9 +97,8 @@ public class LoginStep {
             FirefoxOptions options = new FirefoxOptions();
             options.setBinary(binary);
             driver = new FirefoxDriver(options);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
-            JSWaiter.setDriver(driver);
+            PageWaiter.setDriver(driver);
         }
         else
         {
