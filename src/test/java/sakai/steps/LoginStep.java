@@ -1,26 +1,16 @@
 package sakai.steps;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import sakai.utilities.SakaiLogger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
-import sakai.utilities.JSWaiter;
+import sakai.utilities.Util;
 
 public class LoginStep {
 
-    private WebDriver driver;
     private BasePage page;
     private LoginPage login;
     private HomePage home;
@@ -28,7 +18,7 @@ public class LoginStep {
 
     @Given("^I navigate to the login page$")
     public void iNavigateToTheLoginPage() {
-        page = new BasePage(driver);
+        page = new BasePage(Util.getDriver());
         login = page.navigateToLogin();
     }
 
@@ -37,7 +27,10 @@ public class LoginStep {
         home = login.loginAsStudent();
     }
 
-    @Then("^I should see NYU Classes logo$")
+    @And("^I close new feature popup if needed$")
+    public void iCloseWhatSNewPopupIfNeeded() { home.closeNewFeaturePopUp();}
+
+    @Then("^I should see Sakai logo$")
     public void iShouldSeeNYUClassesLogo() {
         home.checkForSakaiBanner();
     }
@@ -54,43 +47,7 @@ public class LoginStep {
     }
 
     @Then("^I should see logged out$")
-    public void iShouldSeeLoggedOut() throws Throwable {
+    public void iShouldSeeLoggedOut() {
         login.checkForLoggedOutBanner();
     }
-
-    @Before
-    public void startUp()
-    {
-        SakaiLogger.logInfo("=========== INITIALIZE LOGIN TEST ===========");
-        // FirefoxDriverManager.getInstance().setup();
-        // driver = new FirefoxDriver();
-        ChromeDriverManager.getInstance().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
-        driver = new ChromeDriver(options);
-        driver.manage().deleteAllCookies();
-        JSWaiter.setDriver(driver);
-
-        SakaiLogger.logInfo("Initializing testing environment\n");
-        SakaiLogger.logInfo("Using driver: Chrome\n");
-    }
-
-    @After
-    public void tearDown(Scenario scenario)
-    {
-        if(scenario.isFailed())
-        {
-            //TODO: Take screenshot
-            SakaiLogger.logErr(scenario.getName());
-            SakaiLogger.logErr("Scenario failed =(");
-        }
-
-        SakaiLogger.logInfo("Cleaning the environment");
-        driver.manage().deleteAllCookies();
-        driver.quit();
-        SakaiLogger.logInfo("=========== LOGIN TEST FINISHED ===========");
-
-        
-    }
-
 }
