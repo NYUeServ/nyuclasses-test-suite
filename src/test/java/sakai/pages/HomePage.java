@@ -20,8 +20,6 @@ public class HomePage extends BasePage{
 
     public void checkForSakaiBanner()
     {
-        //Close the new feature pop up if it does come up
-        closeNewFeaturePopUp();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement banner = wait.until(ExpectedConditions.presenceOfElementLocated(bannerSelector));
         assertTrue(banner.isDisplayed());

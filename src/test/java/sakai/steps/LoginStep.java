@@ -3,6 +3,7 @@ package sakai.steps;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -48,6 +49,9 @@ public class LoginStep {
     public void iLoginAsStudent() {
         home = login.loginAsStudent();
     }
+
+    @And("^I close What's New Popup if needed$")
+    public void iCloseWhatSNewPopupIfNeeded() { home.closeNewFeaturePopUp();}
 
     @Then("^I should see NYU Classes logo$")
     public void iShouldSeeNYUClassesLogo() {
@@ -139,5 +143,4 @@ public class LoginStep {
             SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
         }
     }
-
 }
