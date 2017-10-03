@@ -30,6 +30,10 @@ public class HomePage extends BasePage{
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
+
+        //Waiting for profile to see if it is enabled
+        //We can assume that if profile is not enabled, the new feature popup exists
+        //If profile is enabled, it is safe to assume that there is no popup
         if(!profile.isEnabled())
         {
             WebElement acknowledge = wait.until(ExpectedConditions.presenceOfElementLocated(newFeatureAcknowledgeSelector));
