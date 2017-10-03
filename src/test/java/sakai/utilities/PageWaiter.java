@@ -86,7 +86,7 @@ public class PageWaiter {
     //Wait until page is ready
     public static void waitUntilPageReady()
     {
-        if(Configuration.getPlatform().equalsIgnoreCase("chrome"))
+        if(Util.getPlatform().equalsIgnoreCase("chrome"))
         {
             SakaiLogger.logInfo("Chrome Platform: Waiting for jQuery/Javascript on page");
             PageWaiter.waitUntilJQueryReady();
