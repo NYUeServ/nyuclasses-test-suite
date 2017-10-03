@@ -37,6 +37,10 @@ Go to the command line, navigate to the project folder, and execute the followin
 ```
 $ mvn clean test
 ```
+To run the test cases from a docker container, simply use the docker compose command below:
+```
+$ docker-compose up
+```
 The tests should execute and automate through your browsers.
 
 Changing WebDriver Versions
