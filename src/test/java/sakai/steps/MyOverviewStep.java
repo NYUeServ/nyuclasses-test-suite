@@ -1,10 +1,6 @@
 package sakai.steps;
 
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import sakai.pages.BasePage;
-import sakai.pages.HomePage;
-import sakai.pages.LoginPage;
 import sakai.utilities.DriverAPI;
 
 public class MyOverviewStep extends DriverAPI {
@@ -18,10 +14,6 @@ public class MyOverviewStep extends DriverAPI {
 
     @Then("^I should see \"([^\"]*)\"$")
     public void iShouldSee(String frameName) {
-        switch(frameName)
-        {
-            case "NYU Classes Info":
-
-        }
+        api.getHomePage().checkForOverviewWidget(frameName);
     }
 }

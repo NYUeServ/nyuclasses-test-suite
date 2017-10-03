@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.utilities.PageWaiter;
+import sakai.utilities.SakaiLogger;
 
 import java.util.List;
 
@@ -34,14 +35,19 @@ public class HomePage extends BasePage{
     {
         WebDriverWait wait = new WebDriverWait(driver,10);
         List<WebElement> elements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(widgetTitleSelector));
+        boolean found = false;
         for(WebElement e : elements)
         {
+            SakaiLogger.logInfo("Currently checking element with innerText of " + e.getAttribute("innerText"));
             if(widgetName.equalsIgnoreCase(e.getAttribute("innerText")))
             {
-                assertEquals(widgetName, e.getAttribute("innerText"));
+                found = true;
             }
         }
-        fail("Widget of name " + widgetName + " was not found");
+        if(!found)
+        {
+            fail("Widget of name " + widgetName + " was not found");
+        }
     }
 
     public void closeNewFeaturePopUp()
