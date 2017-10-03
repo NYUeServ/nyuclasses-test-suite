@@ -97,8 +97,7 @@ public class LoginStep {
             binary.addCommandLineOptions("--headless");
             FirefoxOptions options = new FirefoxOptions();
             options.setBinary(binary);
-            //driver = new FirefoxDriver(options);
-            driver = new FirefoxDriver();
+            driver = new FirefoxDriver(options);
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
             JSWaiter.setDriver(driver);
