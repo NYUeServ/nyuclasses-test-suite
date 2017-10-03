@@ -20,12 +20,14 @@ public class PageWaiter {
     private static WebDriver jsWaitDriver;
     private static WebDriverWait jsWait;
     private static JavascriptExecutor jsExec;
+    private static String waitPlatform;
 
     //Get the driver from relevant test
-    public static void setDriver (WebDriver driver) {
+    public static void setDriver (WebDriver driver, String platform) {
         jsWaitDriver = driver;
         jsWait = new WebDriverWait(jsWaitDriver, 10);
         jsExec = (JavascriptExecutor) jsWaitDriver;
+        waitPlatform = platform;
     }
 
     //Wait for JQuery Load
@@ -86,7 +88,7 @@ public class PageWaiter {
     //Wait until page is ready
     public static void waitUntilPageReady()
     {
-        if(Util.getPlatform().equalsIgnoreCase("chrome"))
+        if(waitPlatform.equalsIgnoreCase("chrome"))
         {
             SakaiLogger.logInfo("Chrome Platform: Waiting for jQuery/Javascript on page");
             PageWaiter.waitUntilJQueryReady();

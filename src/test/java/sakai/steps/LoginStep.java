@@ -7,32 +7,43 @@ import cucumber.api.java.en.When;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
-import sakai.utilities.Util;
+import sakai.utilities.DriverAPI;
 
-public class LoginStep {
+public class LoginStep extends DriverAPI{
 
-    private BasePage page;
-    private LoginPage login;
-    private HomePage home;
+    private DriverAPI api;
 
+    public LoginStep(DriverAPI api)
+    {
+        this.api = api;
+    }
 
     @Given("^I navigate to the login page$")
-    public void iNavigateToTheLoginPage() {
-        page = new BasePage(Util.getDriver());
-        login = page.navigateToLogin();
+    public void iNavigateToTheLoginPage()
+    {
+        BasePage page = new BasePage(api.getDriver());
+        LoginPage login = api.setBasePage(page).navigateToLogin();
+        api.setLoginPage(login);
+
     }
 
     @When("^I login as student$")
-    public void iLoginAsStudent() {
-        home = login.loginAsStudent();
+    public void iLoginAsStudent()
+    {
+        HomePage home = api.getLoginPage().loginAsStudent();
+        api.setHomePage(home);
+
     }
 
     @And("^I close new feature popup if needed$")
-    public void iCloseWhatSNewPopupIfNeeded() { home.closeNewFeaturePopUp();}
+    public void iCloseWhatSNewPopupIfNeeded()
+    {
+        api.getHomePage().closeNewFeaturePopUp();
+    }
 
     @Then("^I should see Sakai logo$")
     public void iShouldSeeNYUClassesLogo() {
-        home.checkForSakaiBanner();
+        api.getHomePage().checkForSakaiBanner();
     }
 
     @Given("^I am logged in$")
@@ -43,11 +54,12 @@ public class LoginStep {
 
     @When("^I log out$")
     public void iLogOut() {
-        login = home.logout();
+        LoginPage login = api.getHomePage().logout();
+        api.setLoginPage(login);
     }
 
     @Then("^I should see logged out$")
     public void iShouldSeeLoggedOut() {
-        login.checkForLoggedOutBanner();
+        api.getLoginPage().checkForLoggedOutBanner();
     }
 }
