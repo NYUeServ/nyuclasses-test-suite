@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class HomePage extends BasePage{
 
     private final By bannerSelector = By.className("Mrphs-topHeader");
+    private final By newFeatureAcknowledgeSelector = By.id("popup-acknowledged-button");
     private final By profileSelector = By.className("Mrphs-userNav__submenuitem--username");
     private final By logoutButtonSelector = By.id("loginLink1");
 
@@ -22,12 +23,24 @@ public class HomePage extends BasePage{
         assertTrue(banner.isDisplayed());
     }
 
+    public void closeNewFeaturePopUp()
+    {
+        JSWaiter.waitUntilJQueryReady();
+        WebElement acknowledge = driver.findElement(newFeatureAcknowledgeSelector);
+        acknowledge.click();
+    }
+
     public LoginPage logout()
     {
         JSWaiter.waitUntilJQueryReady();
         WebElement profile = driver.findElement(profileSelector);
         WebElement logout = driver.findElement(logoutButtonSelector);
 
+        //If profile icon is not clickable, check for what's new popup and close it
+        if(!profile.isEnabled())
+        {
+            closeNewFeaturePopUp();
+        }
         profile.click();
         logout.click();
 

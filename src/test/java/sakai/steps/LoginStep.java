@@ -1,15 +1,14 @@
 package sakai.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import sakai.utilities.SakaiLogger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -62,7 +61,7 @@ public class LoginStep {
     @Before
     public void startUp()
     {
-        System.out.println("=========== INITIALIZE LOGIN TEST ===========");
+        SakaiLogger.logInfo("=========== INITIALIZE LOGIN TEST ===========");
         // FirefoxDriverManager.getInstance().setup();
         // driver = new FirefoxDriver();
         ChromeDriverManager.getInstance().setup();
@@ -72,8 +71,8 @@ public class LoginStep {
         driver.manage().deleteAllCookies();
         JSWaiter.setDriver(driver);
 
-        System.out.println("Initializing testing environment");
-        System.out.println("Using driver: Chrome");
+        SakaiLogger.logInfo("Initializing testing environment\n");
+        SakaiLogger.logInfo("Using driver: Chrome\n");
     }
 
     @After
@@ -82,13 +81,14 @@ public class LoginStep {
         if(scenario.isFailed())
         {
             //TODO: Take screenshot
-            System.out.println(scenario.getName());
+            SakaiLogger.logErr(scenario.getName());
+            SakaiLogger.logErr("Scenario failed =(");
         }
-        
-        System.out.println("Cleaning the environment");
+
+        SakaiLogger.logInfo("Cleaning the environment");
         driver.manage().deleteAllCookies();
         driver.quit();
-        System.out.println("=========== LOGIN TEST FINISHED ===========");
+        SakaiLogger.logInfo("=========== LOGIN TEST FINISHED ===========");
 
         
     }
