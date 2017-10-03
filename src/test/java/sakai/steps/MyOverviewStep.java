@@ -12,7 +12,7 @@ public class MyOverviewStep extends DriverAPI {
         this.api = api;
     }
 
-    @Then("^I should see \"([^\"]*)\"$")
+    @Then("^I should see \"([^\"]*)\" on home page$")
     public void iShouldSee(String frameName) {
         api.getHomePage().checkForOverviewWidget(frameName);
     }
