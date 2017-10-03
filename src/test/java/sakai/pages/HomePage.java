@@ -20,8 +20,8 @@ public class HomePage extends BasePage{
 
     public void checkForSakaiBanner()
     {
+        //Close the new feature pop up if it does come up
         closeNewFeaturePopUp();
-        JSWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement banner = wait.until(ExpectedConditions.presenceOfElementLocated(bannerSelector));
         assertTrue(banner.isDisplayed());
@@ -29,15 +29,19 @@ public class HomePage extends BasePage{
 
     public void closeNewFeaturePopUp()
     {
-        JSWaiter.waitUntilJQueryReady();
+        JSWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement acknowledge = wait.until(ExpectedConditions.presenceOfElementLocated(newFeatureAcknowledgeSelector));
-        acknowledge.click();
+        WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
+        if(!profile.isEnabled())
+        {
+            WebElement acknowledge = wait.until(ExpectedConditions.presenceOfElementLocated(newFeatureAcknowledgeSelector));
+            acknowledge.click();
+        }
+
     }
 
     public LoginPage logout()
     {
-        JSWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
         WebElement logout = wait.until(ExpectedConditions.presenceOfElementLocated(logoutButtonSelector));

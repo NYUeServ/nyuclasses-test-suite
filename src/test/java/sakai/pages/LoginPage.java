@@ -5,10 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import sakai.utilities.JSWaiter;
-import sakai.utilities.SakaiLogger;
-import sakai.utilities.User;
-import sakai.utilities.UserFactory;
+import sakai.utilities.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,7 +24,6 @@ public class LoginPage extends BasePage {
     public HomePage loginAsStudent()
     {
         SakaiLogger.logInfo("Finding Web Elements on page...");
-        JSWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
@@ -40,7 +36,7 @@ public class LoginPage extends BasePage {
         login.click();
 
         SakaiLogger.logInfo("Login request submitted");
-        JSWaiter.waitUntilJQueryReady();
+        JSWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }
@@ -48,7 +44,6 @@ public class LoginPage extends BasePage {
     public HomePage loginAsInstructor()
     {
         SakaiLogger.logInfo("Finding Web Elements on page...");
-        JSWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
@@ -61,7 +56,7 @@ public class LoginPage extends BasePage {
         login.click();
 
         SakaiLogger.logInfo("Login request submitted");
-        JSWaiter.waitUntilJQueryReady();
+        JSWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
     }

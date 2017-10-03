@@ -77,7 +77,7 @@ public class LoginStep {
         SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
         Configuration.setPlatform(System.getenv("sakai_browser"));
 
-        if(Configuration.getPlatform().equalsIgnoreCase("chrome"))
+        if(Configuration.getPlatform() != null && Configuration.getPlatform().equalsIgnoreCase("chrome"))
         {
             SakaiLogger.logInfo("Initializing testing environment");
             SakaiLogger.logInfo("Using driver: Chrome");
@@ -88,7 +88,7 @@ public class LoginStep {
             driver.manage().deleteAllCookies();
             JSWaiter.setDriver(driver);
         }
-        else if(Configuration.getPlatform().equalsIgnoreCase("firefox"))
+        else if(Configuration.getPlatform() != null && Configuration.getPlatform().equalsIgnoreCase("firefox"))
         {
             SakaiLogger.logInfo("Initializing testing environment");
             SakaiLogger.logInfo("Using driver: Firefox");
@@ -97,7 +97,7 @@ public class LoginStep {
             binary.addCommandLineOptions("--headless");
             FirefoxOptions options = new FirefoxOptions();
             options.setBinary(binary);
-            driver = new FirefoxDriver(options);
+            //driver = new FirefoxDriver(options);
             driver = new FirefoxDriver();
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.manage().deleteAllCookies();
@@ -113,24 +113,34 @@ public class LoginStep {
     @After
     public void tearDown(Scenario scenario)
     {
-        if(scenario.isFailed())
+        if(Configuration.getPlatform() == null || (!Configuration.getPlatform().equalsIgnoreCase("chrome") && !Configuration.getPlatform().equalsIgnoreCase("firefox")))
         {
-            //TODO: Take screenshot
+            SakaiLogger.logInfo("Scenario failed because no browser environment was defined");
+            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+        }
+        else if(scenario.isFailed())
+        {
             SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
             File screencap = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
                 FileUtils.copyFile(screencap, new File("target/screencap/" + scenario.getName() + "_" + new Date() + ".png"));
+                SakaiLogger.logInfo("Cleaning the environment");
+                driver.manage().deleteAllCookies();
+                driver.quit();
+                SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
             }
             catch(IOException e)
             {
 
             }
         }
-
-        SakaiLogger.logInfo("Cleaning the environment");
-        driver.manage().deleteAllCookies();
-        driver.quit();
-        SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+        else
+        {
+            SakaiLogger.logInfo("Cleaning the environment");
+            driver.manage().deleteAllCookies();
+            driver.quit();
+            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+        }
     }
 
 }

@@ -8,5 +8,6 @@ Feature: LoginFeature
 
   Scenario: Log out of Sakai
     Given I am logged in
+    Then I should see NYU Classes logo
     When I log out
     Then I should see logged out

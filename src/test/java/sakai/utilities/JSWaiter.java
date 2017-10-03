@@ -77,6 +77,25 @@ public class JSWaiter {
         }
     }
 
+    //Wait until page is ready
+    public static void waitUntilPageReady()
+    {
+        if(Configuration.getPlatform().equalsIgnoreCase("chrome"))
+        {
+            SakaiLogger.logInfo("Chrome Platform: Waiting for jQuery/Javascript on page");
+            JSWaiter.waitUntilJQueryReady();
+        }
+        else
+        {
+            SakaiLogger.logInfo("Firefox Platform: Sleeping thread for page detection");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public static void sleep (long milis) {
         try {
