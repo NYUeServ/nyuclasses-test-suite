@@ -51,25 +51,23 @@ Edit webdrivermanager.properties to whatever your heart desires.
 
 FAQs
 ----
-Q1: What is this JSWaiter class in your utilities?
+Q1: What is this PageWaiter class in your utilities?
 
-A1: JSWaiter is a Javascript and JQuery web driver waiter we adapted because sometimes 
+A1: PageWaiter is a Javascript and JQuery web driver waiter we adapted because sometimes 
 WebDrivers do not wait until thepage is fully loaded before checking for elements.
 
 --
 
-Q2: If you have JSWaiter, then why is there another WebDriverWait in the code?
+Q2: If you have PageWaiter, then why is there another WebDriverWait in the code?
 
 A2: Well unfortunately, through our testing, the Gecko driver of Firefox actually do not
-behave as intended when using JSWaiter, so we have to revert back to the built-in WebDriverWait
+behave as intended when using PageWaiter, so we have to revert back to the built-in WebDriverWait
 to wait for the specific elements to appear on page.
 
 --
 
 Q3: Does this test suite run different browsers in parallel?
 
-A3: No, it does not. We designed it for our docker testing platform so we can run 
-one browser platform in one single docker instance, and we then can run multiple docker instances. 
-I'm sure you can modify this test suite to generate parallel runners.
+A3: The test suite can only be run on a single browser serially. But by using docker-compose we can run on multiple browsers (chrome & firefox) in "parallel"! (They are still sharing the CPU of course.) 
 
 --
