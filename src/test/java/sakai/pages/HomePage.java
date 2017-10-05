@@ -8,11 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 
-import java.util.List;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class HomePage extends BasePage{
 
@@ -26,6 +23,8 @@ public class HomePage extends BasePage{
 
     public void checkForSakaiBanner()
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement banner = wait.until(ExpectedConditions.presenceOfElementLocated(bannerSelector));
         assertTrue(banner.isDisplayed());
@@ -33,6 +32,8 @@ public class HomePage extends BasePage{
 
     public void checkForOverviewWidget(String widgetName)
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         By widgetTitleSelector = By.xpath("//div/nav/h2[. = '" + widgetName + "']");
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(widgetTitleSelector));
@@ -41,25 +42,61 @@ public class HomePage extends BasePage{
 
     public void clickOnTool(String toolName)
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
         WebDriverWait wait = new WebDriverWait(driver,10);
         By toolNameSelector = By.cssSelector("a[title=\"" + toolName + "\"]");
         WebElement tool = wait.until(ExpectedConditions.presenceOfElementLocated(toolNameSelector));
+        SakaiLogger.logDebug("Clicking on " + toolName + " tool...");
         tool.click();
     }
 
     public void checkProfileName(String name)
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
         WebElement nameElement = driver.findElement(myProfileNameSelector);
         assertEquals(name, nameElement.getText());
     }
 
-    public void checkTabVisibility(String tabName)
+    public void checkProfileTabVisibility(String tabName)
     {
-        
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
+        By tabsSelector = By.xpath("//*[@id=\"col1\"]/div/ul/li/span/a[contains(.,'" + tabName + "')]");
+        WebElement tab = driver.findElement(tabsSelector);
+        assertEquals(tabName, tab.getAttribute("innerText"));
+    }
+
+    public void clickOnProfileTab(String tabName)
+    {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        By tabsSelector = By.xpath("//*[@id=\"col1\"]/div/ul/li/span/a[contains(.,'" + tabName + "')]");
+        WebElement tab = driver.findElement(tabsSelector);
+        SakaiLogger.logDebug("Clicking on " + tabName + " tab...");
+        tab.click();
+    }
+
+    public void checkButtonVisibility(String buttonName)
+    {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
+        By buttonSelector = By.xpath("//input[@value='" + buttonName + "']");
+        WebElement button = driver.findElement(buttonSelector);
+        assertEquals(buttonName, button.getAttribute("value"));
+    }
+
+    public void checkHeadingVisibility(String headingName)
+    {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
+        By headingSelector = By.xpath("//h3[contains(.,'" + headingName + "')]");
+        WebElement heading = driver.findElement(headingSelector);
+        assertTrue(heading.getText().contains(headingName));
     }
 
     public void closeNewFeaturePopUp()
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
@@ -70,6 +107,7 @@ public class HomePage extends BasePage{
         if(!profile.isEnabled())
         {
             WebElement acknowledge = wait.until(ExpectedConditions.presenceOfElementLocated(newFeatureAcknowledgeSelector));
+            SakaiLogger.logDebug("Clicking on Acknowledge...");
             acknowledge.click();
         }
 
@@ -77,6 +115,8 @@ public class HomePage extends BasePage{
 
     public LoginPage logout()
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement profile = wait.until(ExpectedConditions.presenceOfElementLocated(profileSelector));
         WebElement logout = wait.until(ExpectedConditions.presenceOfElementLocated(logoutButtonSelector));
@@ -86,7 +126,9 @@ public class HomePage extends BasePage{
         {
             closeNewFeaturePopUp();
         }
+        SakaiLogger.logDebug("Clicking on Client Profile...");
         profile.click();
+        SakaiLogger.logDebug("Clicking on Log Out...");
         logout.click();
 
         return new LoginPage(driver);

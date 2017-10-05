@@ -1,11 +1,10 @@
 package sakai.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import sakai.pages.HomePage;
 import sakai.utilities.DriverAPI;
+import sakai.utilities.SakaiLogger;
 
 public class MyProfileStep extends DriverAPI {
 
@@ -19,58 +18,37 @@ public class MyProfileStep extends DriverAPI {
     @When("^I click on \"([^\"]*)\" tool$")
     public void iClickOnTool(String toolName)
     {
+        SakaiLogger.logInfo("Step: I click on \"" + toolName + "\" tool");
         api.getHomePage().clickOnTool(toolName);
     }
 
     @And("^I should see my name \"([^\"]*)\" under My Profile tab$")
     public void iShouldSeeMyNameUnderMyProfileTab(String name){
+        SakaiLogger.logInfo("Step: I should see my name \"" + name + "\" under My Profile tab");
         api.getHomePage().checkProfileName(name);
     }
 
     @And("^I should see \"([^\"]*)\" tab$")
-    public void iShouldSeeTab(String arg0) {
-
+    public void iShouldSeeTab(String tabName) {
+        SakaiLogger.logInfo("Step: I should see \"" + tabName + "\" tab");
+        api.getHomePage().checkProfileTabVisibility(tabName);
     }
 
     @When("^I click on \"([^\"]*)\" tab$")
-    public void iClickOnTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^I should see \"([^\"]*)\" under Pictures tab$")
-    public void iShouldSeeUnderPicturesTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iClickOnTab(String tabName) {
+        SakaiLogger.logInfo("Step: I click on \"" + tabName + "\" tab");
+        api.getHomePage().clickOnProfileTab(tabName);
     }
 
     @And("^I should see button with name of \"([^\"]*)\"$")
-    public void iShouldSeeButtonWithNameOf(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iShouldSeeButtonWithNameOf(String buttonName) {
+        SakaiLogger.logInfo("Step: I should see button with name of \"" + buttonName + "\"");
+        api.getHomePage().checkButtonVisibility(buttonName);
     }
 
-    @Then("^I should see \"([^\"]*)\" under Connections tab$")
-    public void iShouldSeeUnderConnectionsTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^I should see \"([^\"]*)\" under Search tab$")
-    public void iShouldSeeUnderSearchTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^I should see \"([^\"]*)\" under Privacy tab$")
-    public void iShouldSeeUnderPrivacyTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^I should see \"([^\"]*)\" under Preferences tab$")
-    public void iShouldSeeUnderPreferencesTab(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^I should see \"([^\"]*)\" as heading$")
+    public void iShouldSeeAsHeading(String headingName) {
+        SakaiLogger.logInfo("Step: I should see \"" + headingName + "\" as heading");
+        api.getHomePage().checkHeadingVisibility(headingName);
     }
 }
