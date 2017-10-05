@@ -17,22 +17,16 @@ public class MyOverview extends Tool{
     private final HomePage parent;
     private final WebDriver driver;
 
-    By myProfileToolSelector = By.cssSelector("a[title=\"Overview \"]");
-
     public MyOverview (HomePage parent, WebDriver driver)
     {
-        super(parent, driver);
+        super(driver);
         this.parent = parent;
         this.driver = driver;
     }
 
     public void navigate()
     {
-        SakaiLogger.logDebug("Finding My Overview tool element...");
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement myprofile = wait.until(ExpectedConditions.presenceOfElementLocated(myProfileToolSelector));
-        SakaiLogger.logDebug("Clicking on My Overview tool...");
-        myprofile.click();
+        this.navigateToToolWithName("Overview");
     }
 
     public void checkForOverviewFrames(String widgetName)

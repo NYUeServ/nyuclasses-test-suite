@@ -11,7 +11,7 @@ import sakai.pages.LoginPage;
  *
  * The setters of this class will also return a copy of what is set, for the sake of easier chaining commands
  */
-public class DriverAPI {
+public class BrowserAPI {
 
     private String platform;
     private WebDriver driver;

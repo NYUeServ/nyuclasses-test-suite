@@ -16,7 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
-import sakai.utilities.DriverAPI;
+import sakai.utilities.BrowserAPI;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,22 +24,22 @@ import java.util.Date;
 
 import static org.junit.Assert.fail;
 
-public class SetupTeardown extends DriverAPI{
+public class SetupTeardown extends BrowserAPI {
 
-    private DriverAPI api;
+    private BrowserAPI browser;
 
-    public SetupTeardown(DriverAPI api)
+    public SetupTeardown(BrowserAPI browser)
     {
-        this.api = api;
+        this.browser = browser;
     }
 
     @Before
     public void startUp(Scenario scenario)
     {
         SakaiLogger.logInfo("=========== Starting (" + scenario.getName() + ") Scenario ===========");
-        api.setPlatform(System.getenv("sakai_browser"));
+        browser.setPlatform(System.getenv("sakai_browser"));
 
-        if(api.getPlatform() != null && api.getPlatform().equalsIgnoreCase("chrome"))
+        if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("chrome"))
         {
             SakaiLogger.logInfo("Using driver: Chrome - Initializing testing environment");
 
@@ -50,10 +50,10 @@ public class SetupTeardown extends DriverAPI{
 
             //Setup global variables and page waiter
             WebDriver driver = new ChromeDriver(options);
-            api.setDriver(driver);
+            browser.setDriver(driver);
             PageWaiter.setDriver(driver, "chrome");
         }
-        else if(api.getPlatform() != null && api.getPlatform().equalsIgnoreCase("firefox"))
+        else if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("firefox"))
         {
             SakaiLogger.logInfo("Using driver: Firefox - Initializing testing environment");
 
@@ -66,7 +66,7 @@ public class SetupTeardown extends DriverAPI{
 
             //Setup global variables and page waiter
             WebDriver driver = new FirefoxDriver(options);
-            api.setDriver(driver);
+            browser.setDriver(driver);
             PageWaiter.setDriver(driver, "firefox");
         }
         else
@@ -79,14 +79,14 @@ public class SetupTeardown extends DriverAPI{
     @After
     public void tearDown(Scenario scenario)
     {
-        if(api.getPlatform() == null || (!api.getPlatform().equalsIgnoreCase("chrome") && !api.getPlatform().equalsIgnoreCase("firefox")))
+        if(browser.getPlatform() == null || (!browser.getPlatform().equalsIgnoreCase("chrome") && !browser.getPlatform().equalsIgnoreCase("firefox")))
         {
             SakaiLogger.logErr("Scenario failed because no browser environment was defined");
             SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
         else if(scenario.isFailed())
         {
-            WebDriver driver = api.getDriver();
+            WebDriver driver = browser.getDriver();
             SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
@@ -105,7 +105,7 @@ public class SetupTeardown extends DriverAPI{
         }
         else
         {
-            WebDriver driver = api.getDriver();
+            WebDriver driver = browser.getDriver();
             SakaiLogger.logDebug("Scenario finished - Deleting cookies");
             driver.manage().deleteAllCookies();
             driver.quit();

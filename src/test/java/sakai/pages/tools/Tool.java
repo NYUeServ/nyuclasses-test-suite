@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.pages.BasePage;
-import sakai.pages.LoginPage;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 
@@ -15,16 +14,24 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class Tool {
 
-    private final BasePage parent;
-    private final WebDriver driver;
+    protected final WebDriver driver;
 
-    public Tool (BasePage parent, WebDriver driver)
+    public Tool (WebDriver driver)
     {
-        this.parent = parent;
         this.driver = driver;
     }
 
     public abstract void navigate();
+
+    public void navigateToToolWithName(String toolName)
+    {
+        SakaiLogger.logDebug("Finding " + toolName + " tool element...");
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        By toolSelector = By.cssSelector("a[title=\"" + toolName + " \"]");
+        WebElement tool = wait.until(ExpectedConditions.presenceOfElementLocated(toolSelector));
+        SakaiLogger.logDebug("Clicking on " + toolName + " tool...");
+        tool.click();
+    }
 
     public void checkButtonVisibility(String buttonName)
     {

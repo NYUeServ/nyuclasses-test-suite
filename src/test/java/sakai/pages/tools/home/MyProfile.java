@@ -17,22 +17,16 @@ public class MyProfile extends Tool{
     private final HomePage parent;
     private final WebDriver driver;
 
-    private final By myProfileToolSelector = By.cssSelector("a[title=\"My Profile \"]");
-
     public MyProfile (HomePage parent, WebDriver driver)
     {
-        super(parent, driver);
+        super(driver);
         this.parent = parent;
         this.driver = driver;
     }
 
     public void navigate()
     {
-        SakaiLogger.logDebug("Finding My Profile tool element...");
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement myprofile = wait.until(ExpectedConditions.presenceOfElementLocated(myProfileToolSelector));
-        SakaiLogger.logDebug("Clicking on My Profile tool...");
-        myprofile.click();
+        this.navigateToToolWithName("My Profile");
     }
 
     public void checkProfileName(String name)
