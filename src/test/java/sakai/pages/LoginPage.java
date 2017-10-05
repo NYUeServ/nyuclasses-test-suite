@@ -23,19 +23,19 @@ public class LoginPage extends BasePage {
 
     public HomePage loginAsStudent()
     {
-        SakaiLogger.logInfo("Finding Web Elements on page...");
+        SakaiLogger.logDebug("Finding Web Elements on page...");
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
         WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
 
         User student = UserFactory.getValidStudent();
-        SakaiLogger.logInfo("Logging into Student account with username: " + student.getUsername() + ", password: " + student.getPassword());
+        SakaiLogger.logDebug("Logging into Student account with username: " + student.getUsername() + ", password: " + student.getPassword());
         username.sendKeys(student.getUsername());
         password.sendKeys(student.getPassword());
         login.click();
 
-        SakaiLogger.logInfo("Login request submitted");
+        SakaiLogger.logDebug("Login request submitted");
         PageWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
@@ -43,19 +43,19 @@ public class LoginPage extends BasePage {
 
     public HomePage loginAsInstructor()
     {
-        SakaiLogger.logInfo("Finding Web Elements on page...");
+        SakaiLogger.logDebug("Finding Web Elements on page...");
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
         WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
 
         User instructor = UserFactory.getValidInstructor();
-        SakaiLogger.logInfo("Logging into Instructor account with username: " + instructor.getUsername() + ", password: " + instructor.getPassword());
+        SakaiLogger.logDebug("Logging into Instructor account with username: " + instructor.getUsername() + ", password: " + instructor.getPassword());
         username.sendKeys(instructor.getUsername());
         password.sendKeys(instructor.getPassword());
         login.click();
 
-        SakaiLogger.logInfo("Login request submitted");
+        SakaiLogger.logDebug("Login request submitted");
         PageWaiter.waitUntilPageReady();
         assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
         return new HomePage(driver);
@@ -63,6 +63,7 @@ public class LoginPage extends BasePage {
 
     public void checkForLoggedOutBanner()
     {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
         PageWaiter.waitUntilJQueryReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement logoutBanner = wait.until(ExpectedConditions.presenceOfElementLocated(logoutBannerSelector));

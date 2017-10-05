@@ -81,7 +81,7 @@ public class PageWaiter {
             //Post Wait for stability (Optional)
             sleep(20);
         }  else {
-            System.out.println("jQuery is not defined on this site!");
+            SakaiLogger.logDebug("Chrome Platform: jQuery is not defined on this site!");
         }
     }
 
@@ -90,12 +90,12 @@ public class PageWaiter {
     {
         if(waitPlatform.equalsIgnoreCase("chrome"))
         {
-            SakaiLogger.logInfo("Chrome Platform: Waiting for jQuery/Javascript on page");
+            SakaiLogger.logDebug("Chrome Platform: Waiting for jQuery/Javascript on page");
             PageWaiter.waitUntilJQueryReady();
         }
         else
         {
-            SakaiLogger.logInfo("Firefox Platform: Waiting for page redirection to settle");
+            SakaiLogger.logDebug("Firefox Platform: Waiting for page redirection to settle");
             DocumentSettleCondition<Boolean> settleCondition = new DocumentSettleCondition<>(
                     ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.forwarding")));
 

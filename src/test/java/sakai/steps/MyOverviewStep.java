@@ -2,6 +2,7 @@ package sakai.steps;
 
 import cucumber.api.java.en.Then;
 import sakai.utilities.DriverAPI;
+import sakai.utilities.SakaiLogger;
 
 public class MyOverviewStep extends DriverAPI {
 
@@ -14,6 +15,7 @@ public class MyOverviewStep extends DriverAPI {
 
     @Then("^I should see \"([^\"]*)\" on home page$")
     public void iShouldSee(String frameName) {
+        SakaiLogger.logInfo("Step: I should see \"" + frameName + "\" on home page");
         api.getHomePage().checkForOverviewWidget(frameName);
     }
 

@@ -36,13 +36,12 @@ public class SetupTeardown extends DriverAPI{
     @Before
     public void startUp(Scenario scenario)
     {
-        SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+        SakaiLogger.logInfo("=========== Starting (" + scenario.getName() + ") Scenario ===========");
         api.setPlatform(System.getenv("sakai_browser"));
 
         if(api.getPlatform() != null && api.getPlatform().equalsIgnoreCase("chrome"))
         {
-            SakaiLogger.logInfo("Initializing testing environment");
-            SakaiLogger.logInfo("Using driver: Chrome");
+            SakaiLogger.logInfo("Using driver: Chrome - Initializing testing environment");
 
             //Setup Chrome browser configuration and run in headless
             ChromeDriverManager.getInstance().setup();
@@ -56,8 +55,7 @@ public class SetupTeardown extends DriverAPI{
         }
         else if(api.getPlatform() != null && api.getPlatform().equalsIgnoreCase("firefox"))
         {
-            SakaiLogger.logInfo("Initializing testing environment");
-            SakaiLogger.logInfo("Using driver: Firefox");
+            SakaiLogger.logInfo("Using driver: Firefox - Initializing testing environment");
 
             //Setup Firefox browser configuration and run in headless
             FirefoxDriverManager.getInstance().setup();
@@ -73,7 +71,7 @@ public class SetupTeardown extends DriverAPI{
         }
         else
         {
-            SakaiLogger.logInfo("No compatible browser environment found");
+            SakaiLogger.logErr("No compatible browser environment found");
             fail("No compatible browser environment found");
         }
     }
@@ -83,20 +81,22 @@ public class SetupTeardown extends DriverAPI{
     {
         if(api.getPlatform() == null || (!api.getPlatform().equalsIgnoreCase("chrome") && !api.getPlatform().equalsIgnoreCase("firefox")))
         {
-            SakaiLogger.logInfo("Scenario failed because no browser environment was defined");
-            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+            SakaiLogger.logErr("Scenario failed because no browser environment was defined");
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
         else if(scenario.isFailed())
         {
             WebDriver driver = api.getDriver();
             SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
-            File screencap = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
-                FileUtils.copyFile(screencap, new File("target/screencap/" + scenario.getName() + "_" + new Date() + ".png"));
-                SakaiLogger.logInfo("Cleaning the environment");
+                String fileName = scenario.getName() + "_" + new Date() + ".png";
+                FileUtils.copyFile(screenshot, new File("target/screenshot/" + fileName));
+                SakaiLogger.logInfo("Scenario failure screenshot saved as " + fileName);
+                SakaiLogger.logDebug("Scenario finished - Deleting cookies");
                 driver.manage().deleteAllCookies();
                 driver.quit();
-                SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+                SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
             }
             catch(IOException e)
             {
@@ -106,10 +106,10 @@ public class SetupTeardown extends DriverAPI{
         else
         {
             WebDriver driver = api.getDriver();
-            SakaiLogger.logInfo("Cleaning the environment");
+            SakaiLogger.logDebug("Scenario finished - Deleting cookies");
             driver.manage().deleteAllCookies();
             driver.quit();
-            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
     }
 }

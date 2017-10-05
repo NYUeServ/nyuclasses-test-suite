@@ -12,7 +12,7 @@ public class SakaiLogger {
         {
             log = org.apache.log4j.Logger.getRootLogger();
         }
-        log.info(info + "\n");
+        log.info("[Sakai Test] - INFO: " + info + "\n");
     }
 
     public static void logErr(String err)
@@ -21,6 +21,15 @@ public class SakaiLogger {
         {
             log = org.apache.log4j.Logger.getRootLogger();
         }
-        log.error(err + "\n");
+        log.error("[Sakai Test] - ERROR: " + err + "\n");
+    }
+
+    public static void logDebug(String debug)
+    {
+        if(log == null)
+        {
+            log = org.apache.log4j.Logger.getRootLogger();
+        }
+        log.debug("[Sakai Test] - DEBUG: " + debug + "\n");
     }
 }
