@@ -15,7 +15,6 @@ public class DriverAPI {
 
     private String platform;
     private WebDriver driver;
-    private BasePage page;
     private LoginPage login;
     private HomePage home;
 
@@ -36,17 +35,6 @@ public class DriverAPI {
     public WebDriver getDriver()
     {
         return this.driver;
-    }
-
-    public BasePage setBasePage(BasePage page)
-    {
-        this.page = page;
-        return page;
-    }
-
-    public BasePage getBasePage()
-    {
-        return this.page;
     }
 
     public LoginPage setLoginPage(LoginPage login)

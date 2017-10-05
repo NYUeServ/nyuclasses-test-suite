@@ -23,8 +23,7 @@ public class LoginStep extends DriverAPI{
     public void iNavigateToTheLoginPage()
     {
         SakaiLogger.logInfo("Step: I navigate to the login page");
-        BasePage page = new BasePage(api.getDriver());
-        LoginPage login = api.setBasePage(page).navigateToLogin();
+        LoginPage login = new LoginPage(api.getDriver()).navigateToPage();
         api.setLoginPage(login);
 
     }
@@ -60,7 +59,7 @@ public class LoginStep extends DriverAPI{
 
     @When("^I log out$")
     public void iLogOut() {
-        SakaiLogger.logInfo("Step: When I log out");
+        SakaiLogger.logInfo("Step: When I log out from home page");
         LoginPage login = api.getHomePage().logout();
         api.setLoginPage(login);
     }

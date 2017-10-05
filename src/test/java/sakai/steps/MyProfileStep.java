@@ -19,36 +19,44 @@ public class MyProfileStep extends DriverAPI {
     public void iClickOnTool(String toolName)
     {
         SakaiLogger.logInfo("Step: I click on \"" + toolName + "\" tool");
-        api.getHomePage().clickOnTool(toolName);
+        switch(toolName)
+        {
+            case "My Profile":
+                api.getHomePage().profile.navigate();
+                break;
+            default:
+                SakaiLogger.logErr("Tool of name " + toolName + " not found or implemented");
+                break;
+        }
     }
 
     @And("^I should see my name \"([^\"]*)\" under My Profile tab$")
     public void iShouldSeeMyNameUnderMyProfileTab(String name){
         SakaiLogger.logInfo("Step: I should see my name \"" + name + "\" under My Profile tab");
-        api.getHomePage().checkProfileName(name);
+        api.getHomePage().profile.checkProfileName(name);
     }
 
     @And("^I should see \"([^\"]*)\" tab$")
     public void iShouldSeeTab(String tabName) {
         SakaiLogger.logInfo("Step: I should see \"" + tabName + "\" tab");
-        api.getHomePage().checkProfileTabVisibility(tabName);
+        api.getHomePage().profile.checkTabVisibility(tabName);
     }
 
     @When("^I click on \"([^\"]*)\" tab$")
     public void iClickOnTab(String tabName) {
         SakaiLogger.logInfo("Step: I click on \"" + tabName + "\" tab");
-        api.getHomePage().clickOnProfileTab(tabName);
+        api.getHomePage().profile.clickOnTab(tabName);
     }
 
     @And("^I should see button with name of \"([^\"]*)\"$")
     public void iShouldSeeButtonWithNameOf(String buttonName) {
         SakaiLogger.logInfo("Step: I should see button with name of \"" + buttonName + "\"");
-        api.getHomePage().checkButtonVisibility(buttonName);
+        api.getHomePage().profile.checkButtonVisibility(buttonName);
     }
 
     @Then("^I should see \"([^\"]*)\" as heading$")
     public void iShouldSeeAsHeading(String headingName) {
         SakaiLogger.logInfo("Step: I should see \"" + headingName + "\" as heading");
-        api.getHomePage().checkHeadingVisibility(headingName);
+        api.getHomePage().profile.checkHeadingVisibility(headingName);
     }
 }

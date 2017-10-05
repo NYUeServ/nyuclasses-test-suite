@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import sakai.pages.tools.home.MyOverview;
+import sakai.pages.tools.home.MyProfile;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 
@@ -13,85 +15,38 @@ import static org.junit.Assert.assertEquals;
 
 public class HomePage extends BasePage{
 
-    private final By bannerSelector = By.className("Mrphs-topHeader");
+    public final MyOverview overview = new MyOverview(this, driver);
+    public final MyProfile profile = new MyProfile(this, driver);
+
+    private final By institutionHeaderSelector = By.className("Mrphs-headerLogo--institution");
     private final By newFeatureAcknowledgeSelector = By.id("popup-acknowledged-button");
     private final By profileSelector = By.className("Mrphs-userNav__submenuitem--username");
     private final By logoutButtonSelector = By.id("loginLink1");
-    private final By myProfileNameSelector = By.id("profileHeadingName");
 
-    public HomePage(WebDriver driver) { super(driver); }
+    public HomePage(WebDriver driver)
+    {
+        super(driver);
+        PageWaiter.waitUntilPageReady();
+        assertEquals("NYU Classes (STAGE) : My Workspace : Overview", driver.getTitle());
+    }
+
+    @Override
+    public HomePage navigateToPage() {
+        SakaiLogger.logDebug("Navigating to home page...");
+        PageWaiter.waitUntilPageReady();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement header = wait.until(ExpectedConditions.presenceOfElementLocated(institutionHeaderSelector));
+        header.click();
+        return this;
+    }
 
     public void checkForSakaiBanner()
     {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
+        SakaiLogger.logDebug("Finding Sakai Banner...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement banner = wait.until(ExpectedConditions.presenceOfElementLocated(bannerSelector));
-        assertTrue(banner.isDisplayed());
-    }
-
-    public void checkForOverviewWidget(String widgetName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        PageWaiter.waitUntilPageReady();
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        By widgetTitleSelector = By.xpath("//div/nav/h2[. = '" + widgetName + "']");
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(widgetTitleSelector));
-        assertEquals(widgetName, element.getAttribute("innerText"));
-    }
-
-    public void clickOnTool(String toolName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        By toolNameSelector = By.cssSelector("a[title=\"" + toolName + "\"]");
-        WebElement tool = wait.until(ExpectedConditions.presenceOfElementLocated(toolNameSelector));
-        SakaiLogger.logDebug("Clicking on " + toolName + " tool...");
-        tool.click();
-    }
-
-    public void checkProfileName(String name)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        PageWaiter.waitUntilPageReady();
-        WebElement nameElement = driver.findElement(myProfileNameSelector);
-        assertEquals(name, nameElement.getText());
-    }
-
-    public void checkProfileTabVisibility(String tabName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        PageWaiter.waitUntilPageReady();
-        By tabsSelector = By.xpath("//*[@id=\"col1\"]/div/ul/li/span/a[contains(.,'" + tabName + "')]");
-        WebElement tab = driver.findElement(tabsSelector);
-        assertEquals(tabName, tab.getAttribute("innerText"));
-    }
-
-    public void clickOnProfileTab(String tabName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        By tabsSelector = By.xpath("//*[@id=\"col1\"]/div/ul/li/span/a[contains(.,'" + tabName + "')]");
-        WebElement tab = driver.findElement(tabsSelector);
-        SakaiLogger.logDebug("Clicking on " + tabName + " tab...");
-        tab.click();
-    }
-
-    public void checkButtonVisibility(String buttonName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        PageWaiter.waitUntilPageReady();
-        By buttonSelector = By.xpath("//input[@value='" + buttonName + "']");
-        WebElement button = driver.findElement(buttonSelector);
-        assertEquals(buttonName, button.getAttribute("value"));
-    }
-
-    public void checkHeadingVisibility(String headingName)
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        PageWaiter.waitUntilPageReady();
-        By headingSelector = By.xpath("//h3[contains(.,'" + headingName + "')]");
-        WebElement heading = driver.findElement(headingSelector);
-        assertTrue(heading.getText().contains(headingName));
+        WebElement header = wait.until(ExpectedConditions.presenceOfElementLocated(institutionHeaderSelector));
+        assertTrue(header.isDisplayed());
     }
 
     public void closeNewFeaturePopUp()

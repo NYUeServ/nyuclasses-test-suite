@@ -16,7 +16,7 @@ public class MyOverviewStep extends DriverAPI {
     @Then("^I should see \"([^\"]*)\" on home page$")
     public void iShouldSee(String frameName) {
         SakaiLogger.logInfo("Step: I should see \"" + frameName + "\" on home page");
-        api.getHomePage().checkForOverviewWidget(frameName);
+        api.getHomePage().overview.checkForOverviewFrames(frameName);
     }
 
 }

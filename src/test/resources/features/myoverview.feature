@@ -7,3 +7,5 @@ Feature: MyOverview
     Then I should see "NYU Classes Info" on home page
     And I should see "Calendar" on home page
     And I should see "Recent Announcements" on home page
+    When I log out
+    Then I should see logged out

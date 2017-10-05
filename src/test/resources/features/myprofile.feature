@@ -4,8 +4,7 @@ Feature: MyProfile
   Scenario: My Profile overview
     Given I am logged in
      And I close new feature popup if needed
-    ## The title of the element is actually "My Profile " with a space at the end, this is not an error
-    When I click on "My Profile " tool
+    When I click on "My Profile" tool
      And I should see my name "TesterWP F Tester" under My Profile tab
      And I should see "Pictures" tab
      And I should see "Connections" tab
@@ -32,6 +31,8 @@ Feature: MyProfile
     When I click on "Preferences" tab
     Then I should see "Preferences" as heading
      And I should see button with name of "Save settings"
+    When I log out
+    Then I should see logged out
 
 
 
