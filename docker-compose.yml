@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+    cucumber_chrome:
+        build: ./
+        environment: 
+            - sakai_browser=chrome
+        env_file:
+            - config.env
+        entrypoint: mvn clean test
+        
+
+    cucumber_firefox:
+        build: ./
+        environment: 
+            - sakai_browser=firefox
+        env_file:
+            - config.env
+        entrypoint: mvn clean test
