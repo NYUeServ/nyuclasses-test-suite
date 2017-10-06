@@ -3,9 +3,10 @@
 echo "#########################################"
 echo "Starting Automated Testing using Cucumber"
 echo "#########################################"
-#clear all variables
-unset driver
+#Initialize variables
+driver="virtualbox"
 unset clean_flag
+unset run_docker
 
 #Parse Input Options
 while test $# -gt 0; do
@@ -14,8 +15,8 @@ while test $# -gt 0; do
 			if [ -z "$2" ]
 				then
 					echo "No driver specified"
-					break
 			else
+				run_docker=true
 				driver="$2"
 			fi
 			shift
@@ -41,16 +42,11 @@ if [[ "$clean_flag" = true ]]; then
 	docker-compose rm -fs
 	docker-machine stop cucumber
 	docker-machine rm -y cucumber
-	if  [ -z "$driver" ]; then
+	if  [ -z "$run_docker" ]; then
 		exit 0;
 	fi
 fi
 
-#Check for edge cases
-if [ -z "$driver" ]; then
-	echo "Please provide the driver to be used. Eg: virtualbox, digitalocean, aws, etc. Usage -d 'driver_name' or --driver 'driver_name'"
-	exit 1;
-fi
 echo "Using $driver driver to run the docker machine"
 
 #All the magic is here
