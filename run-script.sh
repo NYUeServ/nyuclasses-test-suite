@@ -14,7 +14,7 @@ while test $# -gt 0; do
 		-d|--driver)
 			if [ -z "$2" ]
 				then
-					echo "No driver specified"
+					echo "No driver specified. Using default as virtualbox"
 			else
 				run_docker=true
 				driver="$2"
