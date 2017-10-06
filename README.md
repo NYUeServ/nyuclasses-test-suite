@@ -45,24 +45,24 @@ The tests should execute and automate through your browsers.
 
 Running the scripts:
 ---
-run-script.sh is made to run all the test cases via a dockerized continer. 
+run.sh is made to run all the test cases via a dockerized continer. 
 
 ```
-bash ./run-script.sh
+bash ./run.sh
 ```
 The above command takes 'virtualbox' as a default docker-machine driver. To specify a driver use the below option.
 ```
-bash ./run-script.sh -d virtualbox
-bash ./run-script.sh --driver virtualbox
+bash ./run.sh -d virtualbox
+bash ./run.sh --driver virtualbox
 ```
 To remove all the docker images and delete the cucumber docker machine run the below command
 ```
-bash ./run-script.sh --clean
-bash ./run-script.sh --c
+bash ./run.sh --clean
+bash ./run.sh --c
 ```
 You can also clean first and run test cases combining the two. Remeber, virtualbox is default.
 ```
-bash ./run-script.sh -c -d
+bash ./run.sh -c -d
 ```
 
 Changing WebDriver Versions
