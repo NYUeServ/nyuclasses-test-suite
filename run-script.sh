@@ -55,5 +55,5 @@ if [ $? -ne 0 ]; then
 	docker-machine start cucumber
 fi
 eval $(docker-machine env cucumber) 
-docker-compose up > logs.txt  # Decide what to do with this
+docker-compose up
 docker-machine stop cucumber
