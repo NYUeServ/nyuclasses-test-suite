@@ -44,6 +44,7 @@ $ docker-compose up
 The tests should execute and automate through your browsers.
 
 Running the scripts:
+---
 run-script.sh is made to run all the test cases via a dockerized continer. 
 
 ```
