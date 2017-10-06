@@ -43,6 +43,19 @@ $ docker-compose up
 ```
 The tests should execute and automate through your browsers.
 
+Running the scripts:
+run-script.sh is made to run all the test cases via a dockerized continer. You will have to specify the driver which will be used by the docker-machine to run the script.
+
+```
+bash ./run-script.sh --driver "driver-name" 
+# --driver can be replaced by -d. To run on your machine in command line use 'virtualbox' as the driver-name
+```
+To remove all the docker images and delete the cucumber docker machine run the below command
+```
+bash ./run-script.sh --clean
+# --clean can be replaced by -c
+```
+
 Changing WebDriver Versions
 ---
 Navigate to the following directory: src/main/resources
