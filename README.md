@@ -37,7 +37,7 @@ Go to the command line, navigate to the project folder, and execute the followin
 ```
 $ mvn clean test
 ```
-To run the test cases from a docker container, simply use the docker compose command below:
+To run the test cases from a docker container, create a config.env file with the desired environment variables and simply use the docker compose command below:
 ```
 $ docker-compose up
 ```
@@ -48,21 +48,21 @@ Running the scripts:
 run.sh is made to run all the test cases via a dockerized continer. 
 
 ```
-bash ./run.sh
+./run.sh
 ```
 The above command takes 'virtualbox' as a default docker-machine driver. To specify a driver use the below option.
 ```
-bash ./run.sh -d virtualbox
-bash ./run.sh --driver virtualbox
+./run.sh -d virtualbox
+./run.sh --driver virtualbox
 ```
 To remove all the docker images and delete the cucumber docker machine run the below command
 ```
-bash ./run.sh --clean
-bash ./run.sh --c
+./run.sh --clean
+./run.sh --c
 ```
 You can also clean first and run test cases combining the two. Remeber, virtualbox is default.
 ```
-bash ./run.sh -c -d
+./run.sh -c -d
 ```
 
 Changing WebDriver Versions

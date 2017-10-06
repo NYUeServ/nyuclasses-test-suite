@@ -1,4 +1,4 @@
-#!/bin/bash/bash
+#!/bin/bash
 
 echo "#########################################"
 echo "Starting Automated Testing using Cucumber"
