@@ -16,7 +16,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
-import sakai.utilities.Util;
+import sakai.utilities.BrowserAPI;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -24,18 +25,24 @@ import java.util.Date;
 
 import static org.junit.Assert.fail;
 
-public class SetupTeardown {
+public class SetupTeardown extends BrowserAPI {
+
+    private BrowserAPI browser;
+
+    public SetupTeardown(BrowserAPI browser)
+    {
+        this.browser = browser;
+    }
 
     @Before
     public void startUp(Scenario scenario)
     {
-        SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
-        Util.setPlatform(System.getenv("sakai_browser"));
+        SakaiLogger.logInfo("=========== Starting (" + scenario.getName() + ") Scenario ===========");
+        browser.setPlatform(System.getenv("sakai_browser"));
 
-        if(Util.getPlatform() != null && Util.getPlatform().equalsIgnoreCase("chrome"))
+        if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("chrome"))
         {
-            SakaiLogger.logInfo("Initializing testing environment");
-            SakaiLogger.logInfo("Using driver: Chrome");
+            SakaiLogger.logInfo("Using driver: Chrome - Initializing testing environment");
 
             //Setup Chrome browser configuration and run in headless
             ChromeDriverManager.getInstance().setup();
@@ -44,13 +51,12 @@ public class SetupTeardown {
 
             //Setup global variables and page waiter
             WebDriver driver = new ChromeDriver(options);
-            Util.setDriver(driver);
-            PageWaiter.setDriver(driver);
+            browser.setDriver(driver);
+            PageWaiter.setDriver(driver, "chrome");
         }
-        else if(Util.getPlatform() != null && Util.getPlatform().equalsIgnoreCase("firefox"))
+        else if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("firefox"))
         {
-            SakaiLogger.logInfo("Initializing testing environment");
-            SakaiLogger.logInfo("Using driver: Firefox");
+            SakaiLogger.logInfo("Using driver: Firefox - Initializing testing environment");
 
             //Setup Firefox browser configuration and run in headless
             FirefoxDriverManager.getInstance().setup();
@@ -61,48 +67,53 @@ public class SetupTeardown {
 
             //Setup global variables and page waiter
             WebDriver driver = new FirefoxDriver(options);
-            Util.setDriver(driver);
-            PageWaiter.setDriver(driver);
+            browser.setDriver(driver);
+            PageWaiter.setDriver(driver, "firefox");
         }
         else
         {
-            SakaiLogger.logInfo("No compatible browser environment found");
+            SakaiLogger.logErr("No compatible browser environment found");
             fail("No compatible browser environment found");
         }
     }
 
     @After
-    public void tearDown(Scenario scenario)
-    {
-        if(Util.getPlatform() == null || (!Util.getPlatform().equalsIgnoreCase("chrome") && !Util.getPlatform().equalsIgnoreCase("firefox")))
+    public void tearDown(Scenario scenario) throws IOException {
+        if(browser.getPlatform() == null || (!browser.getPlatform().equalsIgnoreCase("chrome") && !browser.getPlatform().equalsIgnoreCase("firefox")))
         {
-            SakaiLogger.logInfo("Scenario failed because no browser environment was defined");
-            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+            SakaiLogger.logErr("Scenario failed because no browser environment was defined");
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
         else if(scenario.isFailed())
         {
-            WebDriver driver = Util.getDriver();
+            WebDriver driver = browser.getDriver();
             SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
-            File screencap = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            try {
-                FileUtils.copyFile(screencap, new File("target/screencap/" + scenario.getName() + "_" + new Date() + ".png"));
-                SakaiLogger.logInfo("Cleaning the environment");
-                driver.manage().deleteAllCookies();
-                driver.quit();
-                SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
-            }
-            catch(IOException e)
-            {
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
-            }
+            String fileName = scenario.getName() + "_" + new Date() + ".png";
+            FileUtils.copyFile(screenshot, new File("target/screenshot/" + fileName));
+            SakaiLogger.logInfo("Scenario failure screenshot saved as " + fileName);
+            SakaiLogger.logDebug("Scenario finished - Deleting cookies");
+            driver.manage().deleteAllCookies();
+            driver.quit();
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
+
         }
         else
         {
-            WebDriver driver = Util.getDriver();
-            SakaiLogger.logInfo("Cleaning the environment");
+            WebDriver driver = browser.getDriver();
+            SakaiLogger.logDebug("Scenario finished - Deleting cookies");
             driver.manage().deleteAllCookies();
             driver.quit();
-            SakaiLogger.logInfo("=========== " + scenario.getName() + " ===========");
+
+            // For some reason, Gekcodriver likes to stay alike, we want to kill it here.
+            if(browser.getPlatform().equalsIgnoreCase("firefox"))
+            {
+                String command = "killall geckodriver";
+                Runtime.getRuntime().exec(command);
+            }
+
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
     }
 }
