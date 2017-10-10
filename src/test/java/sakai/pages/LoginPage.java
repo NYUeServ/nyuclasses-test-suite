@@ -24,7 +24,7 @@ public class LoginPage extends BasePage {
     @Override
     public LoginPage navigateToPage()
     {
-        driver.navigate().to("https://stagehercules.home.nyu.edu");
+        driver.navigate().to("https://newclasses.nyu.edu");
         PageWaiter.waitUntilPageReady();
         assertEquals("NYU Login", driver.getTitle());
         return this;
@@ -45,6 +45,10 @@ public class LoginPage extends BasePage {
         password.sendKeys(student.getPassword());
         login.click();
         SakaiLogger.logDebug("Login request submitted");
+
+        PageWaiter.waitUntilPageReady();
+        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
+
         return new HomePage(driver);
     }
 
@@ -62,6 +66,10 @@ public class LoginPage extends BasePage {
         password.sendKeys(instructor.getPassword());
         login.click();
         SakaiLogger.logDebug("Login request submitted");
+
+        PageWaiter.waitUntilPageReady();
+        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
+
         return new HomePage(driver);
     }
 

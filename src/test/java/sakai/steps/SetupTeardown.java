@@ -18,6 +18,7 @@ import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 import sakai.utilities.BrowserAPI;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -77,8 +78,7 @@ public class SetupTeardown extends BrowserAPI {
     }
 
     @After
-    public void tearDown(Scenario scenario)
-    {
+    public void tearDown(Scenario scenario) throws IOException {
         if(browser.getPlatform() == null || (!browser.getPlatform().equalsIgnoreCase("chrome") && !browser.getPlatform().equalsIgnoreCase("firefox")))
         {
             SakaiLogger.logErr("Scenario failed because no browser environment was defined");
@@ -89,19 +89,15 @@ public class SetupTeardown extends BrowserAPI {
             WebDriver driver = browser.getDriver();
             SakaiLogger.logErr("Scenario failed =( - (" + scenario.getName() + ")");
             File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            try {
-                String fileName = scenario.getName() + "_" + new Date() + ".png";
-                FileUtils.copyFile(screenshot, new File("target/screenshot/" + fileName));
-                SakaiLogger.logInfo("Scenario failure screenshot saved as " + fileName);
-                SakaiLogger.logDebug("Scenario finished - Deleting cookies");
-                driver.manage().deleteAllCookies();
-                driver.quit();
-                SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
-            }
-            catch(IOException e)
-            {
 
-            }
+            String fileName = scenario.getName() + "_" + new Date() + ".png";
+            FileUtils.copyFile(screenshot, new File("target/screenshot/" + fileName));
+            SakaiLogger.logInfo("Scenario failure screenshot saved as " + fileName);
+            SakaiLogger.logDebug("Scenario finished - Deleting cookies");
+            driver.manage().deleteAllCookies();
+            driver.quit();
+            SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
+
         }
         else
         {
@@ -109,6 +105,14 @@ public class SetupTeardown extends BrowserAPI {
             SakaiLogger.logDebug("Scenario finished - Deleting cookies");
             driver.manage().deleteAllCookies();
             driver.quit();
+
+            // For some reason, Gekcodriver likes to stay alike, we want to kill it here.
+            if(browser.getPlatform().equalsIgnoreCase("firefox"))
+            {
+                String command = "killall geckodriver";
+                Runtime.getRuntime().exec(command);
+            }
+
             SakaiLogger.logInfo("=========== Finishing (" + scenario.getName() + ") Scenario ===========");
         }
     }

@@ -1,3 +1,4 @@
+@login @all
 Feature: Login
   This feature deals with the login and logout functionality of Sakai
 

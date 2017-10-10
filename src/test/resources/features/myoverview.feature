@@ -1,3 +1,4 @@
+@profile @all
 Feature: MyOverview
   This feature tests the functionality of My Overview Page once logged in to Sakai
 

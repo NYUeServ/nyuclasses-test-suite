@@ -26,8 +26,6 @@ public class HomePage extends BasePage{
     public HomePage(WebDriver driver)
     {
         super(driver);
-        PageWaiter.waitUntilPageReady();
-        assertEquals("NYU Classes (STAGE) : My Workspace : Overview", driver.getTitle());
     }
 
     @Override
