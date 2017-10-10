@@ -1,3 +1,4 @@
+@profile @all
 Feature: MyProfile
   This feature tests the functionality of My Profile tool once logged in to Sakai
 

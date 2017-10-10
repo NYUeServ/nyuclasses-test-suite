@@ -7,7 +7,10 @@ import cucumber.api.java.en.When;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
 import sakai.utilities.BrowserAPI;
+import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
+
+import static org.junit.Assert.assertEquals;
 
 public class LoginStep extends BrowserAPI {
 
@@ -32,6 +35,8 @@ public class LoginStep extends BrowserAPI {
     {
         SakaiLogger.logInfo("Step: I login as student");
         HomePage home = browser.getLoginPage().loginAsStudent();
+        PageWaiter.waitUntilPageReady();
+        assertEquals("NYU Classes : My Workspace : Overview", browser.getDriver().getTitle());
         browser.setHomePage(home);
 
     }

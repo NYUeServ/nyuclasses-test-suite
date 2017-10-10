@@ -24,7 +24,7 @@ public class LoginPage extends BasePage {
     @Override
     public LoginPage navigateToPage()
     {
-        driver.navigate().to("https://stagehercules.home.nyu.edu");
+        driver.navigate().to("https://newclasses.nyu.edu");
         PageWaiter.waitUntilPageReady();
         assertEquals("NYU Login", driver.getTitle());
         return this;
