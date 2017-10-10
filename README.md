@@ -16,7 +16,7 @@ Firefox Installation
 
 Chrome Installation
 
-Running the Tests
+Running tests with Maven (without Docker)
 ---
 First, export your test account credentials and the environment you want to test in. We made the browser configuration
 an environment variable because it is easier for us to dockerize and run in parallel.
@@ -43,7 +43,7 @@ $ docker-compose up
 ```
 The tests should execute and automate through your browsers.
 
-Running the scripts:
+Running with Docker:
 ---
 run.sh is made to run all the test cases via a dockerized continer. 
 
