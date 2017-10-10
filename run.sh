@@ -3,10 +3,10 @@
 echo "#########################################"
 echo "Starting Automated Testing using Cucumber"
 echo "#########################################"
-#Initialize variables
+#Initialize default variables
 driver="virtualbox"
 unset clean_flag
-unset run_docker
+run_docker=true
 
 #Parse Input Options
 while test $# -gt 0; do
@@ -16,7 +16,6 @@ while test $# -gt 0; do
 				then
 					echo "No driver specified. Using default as virtualbox"
 			else
-				run_docker=true
 				driver="$2"
 			fi
 			shift
@@ -25,6 +24,13 @@ while test $# -gt 0; do
 		-c|--clean)
 			echo "Warning: This will remove all docker images and remove docker machine"
 			clean_flag=true
+			unset run_docker
+			shift
+			;;
+		-cr|--clean-run)
+			echo "Warning: This will remove all docker images and remove docker machine"
+			clean_flag=true
+			run_docker=true
 			shift
 			;;
 		*)
@@ -42,10 +48,7 @@ if [[ "$clean_flag" = true ]]; then
 	docker-compose rm -fs
 	docker-machine stop cucumber
 	docker-machine rm -y cucumber
-	if  [ -z "$run_docker" ]; then
-		exit 0;
-	fi
-fi
+fi 
 
 echo "Using $driver driver to run the docker machine"
 
@@ -54,6 +57,14 @@ docker-machine create --driver "$driver" cucumber
 if [ $? -ne 0 ]; then
 	docker-machine start cucumber
 fi
-eval $(docker-machine env cucumber) 
+eval $(docker-machine env cucumber)
+if [[ "$clean_flag" = true ]]; then	
+	docker-compose build
+	if  [ -z "$run_docker" ]; then
+		docker-machine stop cucumber
+		exit 0;
+	fi
+fi
 docker-compose up
 docker-machine stop cucumber
+eval $(docker-machine env)			#Resume to default machine and exit
