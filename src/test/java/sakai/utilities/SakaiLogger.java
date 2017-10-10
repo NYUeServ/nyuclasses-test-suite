@@ -1,35 +1,24 @@
 package sakai.utilities;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SakaiLogger {
 
-    private static Logger log;
+    private final static Logger log = LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 
     public static void logInfo(String info)
     {
-        if(log == null)
-        {
-            log = org.apache.log4j.Logger.getRootLogger();
-        }
-        log.info("[Sakai Test] - INFO: " + info + "\n");
+        log.info(info);
     }
 
     public static void logErr(String err)
     {
-        if(log == null)
-        {
-            log = org.apache.log4j.Logger.getRootLogger();
-        }
-        log.error("[Sakai Test] - ERROR: " + err + "\n");
+        log.error(err);
     }
 
     public static void logDebug(String debug)
     {
-        if(log == null)
-        {
-            log = org.apache.log4j.Logger.getRootLogger();
-        }
-        log.debug("[Sakai Test] - DEBUG: " + debug + "\n");
+        log.debug(debug);
     }
 }

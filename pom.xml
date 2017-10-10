@@ -24,7 +24,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
-                    <skip>true</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
             <!-- Adds build version to manifest -->
@@ -54,34 +54,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>
-                        <include>**/*RunTest.java</include>
-                    </includes>
-                    <failIfNoTests>false</failIfNoTests>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <includes>**/RunReport.java</includes>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.masterthought</groupId>
-                <artifactId>maven-cucumber-reporting</artifactId>
-                <version>3.11.0</version>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <projectName>cucumber-jvm-example</projectName>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <jsonFiles>
-                                <param>${project.build.directory}/cucumber.json</param>
-                            </jsonFiles>
-                            <parallelTesting>false</parallelTesting>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -122,11 +96,28 @@
         </dependency>
 
         <!-- Logger required by Chrome Driver -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
+            <version>1.7.25</version>
+            <scope>test</scope>
         </dependency>
+
+        <!-- Cucumber HTML Report as Integration Test -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>3.8.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- Web Driver Binary Manager -->
         <dependency>
