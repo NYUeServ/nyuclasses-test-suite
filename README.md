@@ -57,12 +57,13 @@ The above command takes 'virtualbox' as a default docker-machine driver. To spec
 ```
 To remove all the docker images and delete the cucumber docker machine run the below command
 ```
-./run.sh --clean
 ./run.sh --c
+./run.sh --clean
 ```
-You can also clean first and run test cases combining the two. Remeber, virtualbox is default.
+You can also clean first and run test cases. virtualbox is the default driver.
 ```
-./run.sh -c -d
+./run.sh -cr
+./run.sh --clean-run
 ```
 
 Changing WebDriver Versions
