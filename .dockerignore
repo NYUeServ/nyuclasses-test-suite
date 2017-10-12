@@ -1,4 +1,6 @@
 .idea/
 target/
+report-chrome/
+report-firefox/
 README.md
 .gitignore/
