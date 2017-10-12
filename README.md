@@ -8,15 +8,24 @@ The test uses Selenium integration, which also uses the Selenium WebDriver, with
 
 Requirements
 ---
-Install Maven (via [manual](https://maven.apache.org/install.html) or [homebrew](https://brew.sh) on MacOS X)
+Maven 3+, Java 8, Docker, Firefox, and Chrome
 
-Java 8
+[Download requirements](https://github.com/NYUeServ/nyuclasses-test-suite/wiki/System-Requirements)
 
-Firefox Installation
+Running with Docker Script:
+---
+We have made a script to run your very own instance of our test suite via docker. If you just want to run it
+without a care in the world, first configure your own **config.env** by changing our template file **config.env.example**.
+This file lives within your working directory.
+ 
+Then, execute the following in your console/terminal:
+```bash
+$ ./run.sh
+```
 
-Chrome Installation
+[Additional run.sh Options](https://github.com/NYUeServ/nyuclasses-test-suite/wiki/run.sh-Flags)
 
-Running tests with Maven (without Docker)
+Running standalone (without Docker Script)
 ---
 First, export your test account credentials and the environment you want to test in. We made the browser configuration
 an environment variable because it is easier for us to dockerize and run in parallel.
@@ -35,62 +44,16 @@ $ mvn test-compile
 
 Go to the command line, navigate to the project folder, and execute the following:
 ```
-$ mvn clean test
+$ mvn clean verify
 ```
 To run the test cases from a docker container, create a config.env file with the desired environment variables and simply use the docker compose command below:
 ```
-$ docker-compose up
+$ docker-compose build && docker-compose up
 ```
-The tests should execute and automate through your browsers.
+The tests should execute and automate through your browsers in headless mode.
 
-Running with Docker:
+Important Links
 ---
-run.sh is made to run all the test cases via a dockerized continer. 
+[Test Suite FAQs](https://github.com/NYUeServ/nyuclasses-test-suite/wiki/FAQs)
 
-```
-./run.sh
-```
-The above command takes 'virtualbox' as a default docker-machine driver. To specify a driver use the below option.
-```
-./run.sh -d virtualbox
-./run.sh --driver virtualbox
-```
-To remove all the docker images and delete the cucumber docker machine run the below command
-```
-./run.sh --c
-./run.sh --clean
-```
-You can also clean first and run test cases. virtualbox is the default driver.
-```
-./run.sh -cr
-./run.sh --clean-run
-```
-
-Changing WebDriver Versions
----
-Navigate to the following directory: src/main/resources
-
-Edit webdrivermanager.properties to whatever your heart desires.
-
-FAQs
-----
-Q1: What is this PageWaiter class in your utilities?
-
-A1: PageWaiter is a Javascript and JQuery web driver waiter we adapted because sometimes 
-WebDrivers do not wait until thepage is fully loaded before checking for elements.
-
---
-
-Q2: If you have PageWaiter, then why is there another WebDriverWait in the code?
-
-A2: Well unfortunately, through our testing, the Gecko driver of Firefox actually do not
-behave as intended when using PageWaiter, so we have to revert back to the built-in WebDriverWait
-to wait for the specific elements to appear on page.
-
---
-
-Q3: Does this test suite run different browsers in parallel?
-
-A3: The test suite can only be run on a single browser serially. But by using docker-compose we can run on multiple browsers (chrome & firefox) in "parallel"! (They are still sharing the CPU of course.) 
-
---
+[WebDriver Versions](https://github.com/NYUeServ/nyuclasses-test-suite/wiki/WebDriver-Versions)
