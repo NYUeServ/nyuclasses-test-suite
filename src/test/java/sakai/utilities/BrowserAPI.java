@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import sakai.pages.BasePage;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
+import sakai.pages.CoursePage;
 
 /**
  * This is the class used by cucumber picocontainer
@@ -17,6 +18,7 @@ public class BrowserAPI {
     private WebDriver driver;
     private LoginPage login;
     private HomePage home;
+    private CoursePage coursePage;
 
     public void setPlatform(String platform){
         this.platform = platform;
@@ -57,5 +59,15 @@ public class BrowserAPI {
     public HomePage getHomePage()
     {
         return this.home;
+    }
+
+    public CoursePage setCoursepage(CoursePage coursePage)
+    {
+        this.coursePage = coursePage;
+        return coursePage;
+    }
+    public CoursePage getCoursePage()
+    {
+        return this.coursePage;
     }
 }
