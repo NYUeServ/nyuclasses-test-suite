@@ -41,7 +41,7 @@ public class CoursePage extends BasePage {
         driver.findElement(By.xpath("//*[@id=\"topnav\"]/li/a[@title='"+ courseTitle +"']")).click();
         return this;
     }
-    
+
     public CoursePage navigateToTab(String tabName)
     {
         SakaiLogger.logDebug("Finding tab on page...");

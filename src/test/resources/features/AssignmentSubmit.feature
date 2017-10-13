@@ -26,12 +26,4 @@ Feature: Assignment
 		When I log out
     	Then I should see logged out
 
-    Scenario: As an Instructor delete the new test assignment
-    	Given I am logged in as "instructor"
-		  And I close new feature popup if needed
-		And I navigate to "Cucumber Test Site" course site
-		When I click on "Assignments" tool
-		And I navigate to the "Assignment List" tab
-		When I remove the assignment "New Test Assignment"
-		When I log out
-    	Then I should see logged out
+   

@@ -34,7 +34,7 @@ public class AssignmentStep extends BrowserAPI {
     @And("^I navigate to the \"([^\"]*)\" tab$")
     public void iNavigateToTheTab(String tabName)
     {
-        SakaiLogger.logInfo("Step: I navigate to the"+ tabName +" tab");
+        SakaiLogger.logInfo("Step: I navigate to the "+ tabName +" tab");
         browser.getCoursePage().navigateToTab(tabName);
     }
 
