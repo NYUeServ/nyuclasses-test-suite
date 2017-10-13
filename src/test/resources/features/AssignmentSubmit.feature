@@ -8,6 +8,8 @@ Feature: Assignment
 		And I navigate to "Cucumber Test Site" course site
 		When I click on "Assignments" tool
 		And I navigate to the "Add" tab
+		Then I should see "Allow Resubmission"
+		Then I should see "Assignment Instructions"
 		And I create a new assignment "New Test Assignment"
 		Then I should see "New Test Assignment"
 		When I log out

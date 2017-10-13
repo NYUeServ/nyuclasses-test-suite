@@ -36,6 +36,9 @@ public class MyOverviewStep extends BrowserAPI {
             case "My Profile":
                 browser.getHomePage().profile.navigate();
                 break;
+            case "Assignments":
+                browser.getCoursePage().assignments.navigate();
+                break;
             default:
                 SakaiLogger.logErr("Tool of name " + toolName + " not found or implemented");
                 break;

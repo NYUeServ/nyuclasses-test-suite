@@ -26,7 +26,9 @@ public class AssignmentStep extends BrowserAPI {
     public void iNavigateToCourseSite(String courseTitle)
     {
         SakaiLogger.logInfo("Step: I navigate to the "+ courseTitle +" tab");
-        browser.getCoursePage().navigateToPage(courseTitle);
+        CoursePage coursePage = new CoursePage(browser.getDriver());
+        browser.setCoursePage(coursePage).navigateToPage(courseTitle);
+
     }
 
     @And("^I navigate to the \"([^\"]*)\" tab$")
@@ -39,8 +41,8 @@ public class AssignmentStep extends BrowserAPI {
     @And("^I create a new assignment \"([^\"]*)\"$")
     public void iCreateANewAssignment(String assignmentTitle)
     {
-        SakaiLogger.logInfo("Step: I create a new assignment"+ assignmentTitle);
-        browser.getCoursePage().createNewAssignment(assignmentTitle);
+        SakaiLogger.logInfo("Step: I create a new assignment "+ assignmentTitle);
+        browser.getCoursePage().assignments.createNewAssignment(assignmentTitle);
     }
 
     @Then("^I should see \"([^\"]*)\"$")
@@ -55,13 +57,13 @@ public class AssignmentStep extends BrowserAPI {
     public void iSubmitMyAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I submit my assignment");
-        browser.getCoursePage().submitAssignment(assignmentTitle);
+        browser.getCoursePage().assignments.submitAssignment(assignmentTitle);
     }
 
     @When("^I remove the assignment \"([^\"]*)\"$")
     public void iRemoveTheAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I remove assignment "+ assignmentTitle);
-        browser.getCoursePage().deleteAssignment(assignmentTitle);
+        browser.getCoursePage().assignments.deleteAssignment(assignmentTitle);
     }
 }

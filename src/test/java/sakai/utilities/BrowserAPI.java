@@ -61,7 +61,7 @@ public class BrowserAPI {
         return this.home;
     }
 
-    public CoursePage setCoursepage(CoursePage coursePage)
+    public CoursePage setCoursePage(CoursePage coursePage)
     {
         this.coursePage = coursePage;
         return coursePage;
