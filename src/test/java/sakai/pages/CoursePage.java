@@ -28,8 +28,6 @@ public class CoursePage extends BasePage {
     public final Syllabus syllabus = new Syllabus(this, driver);
     public final TestsAndQuizzes testsAndQuizzes = new TestsAndQuizzes(this, driver);
 
-    public final By courseSandboxSelector = By.xpath("//*[@id='topnav']/li[2]/a[@title='Tech Team Sandbox']");
-
     public CoursePage(WebDriver driver) {
         super(driver);
         PageWaiter.waitUntilPageReady();
@@ -40,8 +38,20 @@ public class CoursePage extends BasePage {
         SakaiLogger.logDebug("Navigating to course sandbox page...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
+        By courseSandboxSelector = By.xpath("//*[@id='topnav']/li[2]/a[@title='Cucumber Test Site']");
         WebElement course = wait.until(ExpectedConditions.presenceOfElementLocated(courseSandboxSelector));
         course.click();
         return this;
     }
+
+    public CoursePage navigateToPage(String courseTitle) {
+        SakaiLogger.logDebug("Navigating to course sandbox page...");
+        PageWaiter.waitUntilPageReady();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        By courseSandboxSelector = By.xpath("//*[@id=\"topnav\"]/li/a[@title='" + courseTitle + "']");
+        WebElement course = wait.until(ExpectedConditions.presenceOfElementLocated(courseSandboxSelector));
+        course.click();
+        return this;
+    }
+
 }
