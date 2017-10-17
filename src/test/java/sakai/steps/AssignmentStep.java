@@ -42,7 +42,7 @@ public class AssignmentStep extends BrowserAPI {
     public void iCreateANewAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I create a new assignment \""+ assignmentTitle +"\"");
-        browser.getCoursePage().assignments.createNewAssignment(assignmentTitle);
+        browser.getCoursePage().assignments.createNewAssignment(assignmentTitle +  " " + browser.getPlatform());
     }
 
     @Then("^I should see \"([^\"]*)\"$")
@@ -57,13 +57,13 @@ public class AssignmentStep extends BrowserAPI {
     public void iSubmitMyAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I submit my assignment \"" + assignmentTitle + "\"");
-        browser.getCoursePage().assignments.submitAssignment(assignmentTitle);
+        browser.getCoursePage().assignments.submitAssignment(assignmentTitle +  " " + browser.getPlatform());
     }
 
     @When("^I remove the assignment \"([^\"]*)\"$")
     public void iRemoveTheAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I remove assignment \""+ assignmentTitle + "\"");
-        browser.getCoursePage().assignments.deleteAssignment(assignmentTitle);
+        browser.getCoursePage().assignments.deleteAssignment(assignmentTitle +  " " + browser.getPlatform());
     }
 }
