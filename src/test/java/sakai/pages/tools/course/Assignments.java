@@ -31,6 +31,7 @@ public class Assignments extends Tool{
     public void createNewAssignment(String assignmentTitle)
     {
         SakaiLogger.logDebug("Creating a new Assignment...");
+        PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement title = driver.findElement(By.id("new_assignment_title"));
         title.sendKeys(assignmentTitle);
@@ -40,14 +41,21 @@ public class Assignments extends Tool{
         WebElement openDate = driver.findElement(By.id("opendate"));
         openDate.clear();
         openDate.sendKeys(openDateValue);
-        SakaiLogger.logInfo(openDate.getAttribute("value"));
-        if ( !driver.findElement(By.id("allowResToggle")).isSelected() )
+        By doneSelector = By.cssSelector(".ui-datepicker-close");
+        WebElement done = driver.findElement(doneSelector);
+        if( done.isDisplayed() )
         {
-            driver.findElement(By.id("allowResToggle")).click();
+            done.click();
         }
-        wait = new WebDriverWait(driver,1);
-        WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("select#allowResubmitNumber")));
-        Select numberOfResubmissions = new Select(driver.findElement(By.cssSelector("select#allowResubmitNumber")));
+        SakaiLogger.logInfo("The Open Date is set to " + openDate.getAttribute("value"));
+        WebElement allowResToggle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("allowResToggle")));
+        if ( !allowResToggle.isSelected() )
+        {
+            allowResToggle.click();
+        }
+        
+        WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("select#allowResubmitNumber")));
+        Select numberOfResubmissions = new Select(checkbox);
         numberOfResubmissions.selectByVisibleText("Unlimited");
         driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"cke_1_contents\"]/iframe")));
         WebElement assignmentInstructions = driver.findElement(By.xpath("/html/body"));
