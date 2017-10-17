@@ -62,4 +62,15 @@ public class CoursePage extends BasePage {
         course.click();
         return this;
     }
+
+    public CoursePage navigateToPage(String courseTitle) {
+        SakaiLogger.logDebug("Navigating to course page...");
+        PageWaiter.waitUntilPageReady();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        By courseSelector = By.xpath("//*[@id=\"topnav\"]/li/a[@title='" + courseTitle + "']");
+        WebElement course = wait.until(ExpectedConditions.presenceOfElementLocated(courseSelector));
+        course.click();
+        return this;
+    }
+
 }
