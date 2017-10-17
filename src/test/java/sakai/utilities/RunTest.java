@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/",
         glue = "sakai/steps/",
         format = "json:target/cucumber.json",
-        tags = {"@assignment"},
+        tags = {"@all"},
         monochrome = true
 )
 public class RunTest {

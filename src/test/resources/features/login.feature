@@ -9,7 +9,7 @@ Feature: Login
     Then I should see Sakai logo
 
   Scenario: Log out of Sakai
-    Given I am logged in
+    Given I am logged in as "student"
     And I close new feature popup if needed
     Then I should see Sakai logo
     When I log out

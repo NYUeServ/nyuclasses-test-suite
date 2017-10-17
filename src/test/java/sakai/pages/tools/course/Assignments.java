@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 import org.openqa.selenium.support.ui.Select;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Assignments extends Tool{
 
@@ -32,7 +34,13 @@ public class Assignments extends Tool{
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement title = driver.findElement(By.id("new_assignment_title"));
         title.sendKeys(assignmentTitle);
-
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String openDateValue = yesterday.format(formatter);
+        WebElement openDate = driver.findElement(By.id("opendate"));
+        openDate.clear();
+        openDate.sendKeys(openDateValue);
+        SakaiLogger.logInfo(openDate.getAttribute("value"));
         if ( !driver.findElement(By.id("allowResToggle")).isSelected() )
         {
             driver.findElement(By.id("allowResToggle")).click();
@@ -70,7 +78,10 @@ public class Assignments extends Tool{
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         driver.findElement(By.xpath("//*[@id=\"col1\"]/div/div/form/div/table/tbody/tr[contains(.,'"+ assignmentTitle +"')]/td[2]/h4/a")).click();
-        driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"cke_1_contents\"]/iframe")));
+        PageWaiter.waitUntilPageReady();
+        By assignmentTextSelector =  By.xpath("//*[@id=\"cke_1_contents\"]/iframe");
+        WebElement assignmentTextArea = wait.until(ExpectedConditions.presenceOfElementLocated(assignmentTextSelector));
+        driver.switchTo().frame(assignmentTextArea);
         WebElement assignmentText = driver.findElement(By.xpath("/html/body"));
         assignmentText.sendKeys("This is a test assignment submission for automated testing");
         driver.switchTo().defaultContent();

@@ -34,21 +34,21 @@ public class AssignmentStep extends BrowserAPI {
     @And("^I navigate to the \"([^\"]*)\" tab$")
     public void iNavigateToTheTab(String tabName)
     {
-        SakaiLogger.logInfo("Step: I navigate to the "+ tabName +" tab");
+        SakaiLogger.logInfo("Step: I navigate to the \""+ tabName +"\" tab");
         browser.getCoursePage().navigateToTab(tabName);
     }
 
     @And("^I create a new assignment \"([^\"]*)\"$")
     public void iCreateANewAssignment(String assignmentTitle)
     {
-        SakaiLogger.logInfo("Step: I create a new assignment "+ assignmentTitle);
+        SakaiLogger.logInfo("Step: I create a new assignment \""+ assignmentTitle +"\"");
         browser.getCoursePage().assignments.createNewAssignment(assignmentTitle);
     }
 
     @Then("^I should see \"([^\"]*)\"$")
     public void iShouldSee(String needle)
     {
-        SakaiLogger.logInfo("Step: I should see "+ needle);
+        SakaiLogger.logInfo("Step: I should see \""+ needle + "\"");
         List<WebElement> list = browser.getDriver().findElements(By.xpath("//*[contains(text(),'" + needle + "')]"));
         assertTrue("Text not found!", list.size() > 0);
     }
@@ -56,14 +56,14 @@ public class AssignmentStep extends BrowserAPI {
     @When("^I submit my assignment \"([^\"]*)\"$")
     public void iSubmitMyAssignment(String assignmentTitle)
     {
-        SakaiLogger.logInfo("Step: I submit my assignment");
+        SakaiLogger.logInfo("Step: I submit my assignment \"" + assignmentTitle + "\"");
         browser.getCoursePage().assignments.submitAssignment(assignmentTitle);
     }
 
     @When("^I remove the assignment \"([^\"]*)\"$")
     public void iRemoveTheAssignment(String assignmentTitle)
     {
-        SakaiLogger.logInfo("Step: I remove assignment "+ assignmentTitle);
+        SakaiLogger.logInfo("Step: I remove assignment \""+ assignmentTitle + "\"");
         browser.getCoursePage().assignments.deleteAssignment(assignmentTitle);
     }
 }

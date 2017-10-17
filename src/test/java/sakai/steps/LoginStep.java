@@ -58,7 +58,7 @@ public class LoginStep extends BrowserAPI {
 
     @Given("^I am logged in as \"([^\"]*)\"$")
     public void iAmLoggedIn(String user) {        
-        SakaiLogger.logInfo("Step: Given I am logged in");
+        SakaiLogger.logInfo("Step: Given I am logged in as \"" + user + "\"");
         iNavigateToTheLoginPage();
         if(user.equals("student"))
             iLoginAsStudent();
