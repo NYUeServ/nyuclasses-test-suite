@@ -120,8 +120,12 @@ if [[ "$report" = true ]] && [[ "$run_docker" = true ]]; then
 	rm -rf "report-firefox"
 	echo "Retrieving new chrome test reports"
 	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/cucumber-html-reports ./report-chrome
+	echo "Attempts to retrieve chrome failure screenshots, this step may fail if tests are completed successfully..."
+	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/screenshot ./report-chrome/screenshot
 	echo "Retrieving new firefox test reports"
 	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/cucumber-html-reports ./report-firefox
+	echo "Attempts to retrieve firefox failure screenshots, this step may fail if tests are completed successfully..."
+	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/screenshot ./report-firefox/screenshot
 fi 
 
 docker-machine stop cucumber
