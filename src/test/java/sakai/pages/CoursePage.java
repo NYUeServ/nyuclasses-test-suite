@@ -34,14 +34,6 @@ public class CoursePage extends BasePage {
         PageWaiter.waitUntilPageReady();
     }
 
-    public CoursePage navigateToPage(String courseTitle) {
-        SakaiLogger.logDebug("Navigating to course page...");
-        PageWaiter.waitUntilPageReady();
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        driver.findElement(By.xpath("//*[@id=\"topnav\"]/li/a[@title='"+ courseTitle +"']")).click();
-        return this;
-    }
-
     public CoursePage navigateToTab(String tabName)
     {
         SakaiLogger.logDebug("Finding tab on page...");
