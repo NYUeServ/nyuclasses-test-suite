@@ -8,9 +8,7 @@ Feature: Assignment
 		And I navigate to "Cucumber Test Site" course site
 		When I click on "Assignments" tool
 		And I navigate to the "Add" tab
-		Then I should see "Allow Resubmission"
-		Then I should see "Assignment Instructions"
-		And I create a new assignment "New Test Assignment"
+		And I create a new assignment "New Test Assignment" with open date "10/23/2017"
 		Then I should see "New Test Assignment"
 		When I log out
 		Then I should see logged out
