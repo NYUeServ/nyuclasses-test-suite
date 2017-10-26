@@ -3,14 +3,13 @@ package sakai.pages.tools.home;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import sakai.pages.HomePage;
 import sakai.pages.tools.Tool;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MyProfile extends Tool{
 
@@ -29,13 +28,13 @@ public class MyProfile extends Tool{
         this.navigateToToolWithName("My Profile");
     }
 
-    public void checkProfileName(String name)
+    public void checkProfileName()
     {
         SakaiLogger.logDebug("Finding Web Elements on page...");
         PageWaiter.waitUntilPageReady();
         By myProfileNameSelector = By.id("profileHeadingName");
         WebElement nameElement = driver.findElement(myProfileNameSelector);
-        assertEquals(name, nameElement.getText());
+        assertTrue(nameElement.isDisplayed());
     }
 
     public void checkTabVisibility(String tabName)

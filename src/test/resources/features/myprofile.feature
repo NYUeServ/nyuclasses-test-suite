@@ -6,7 +6,7 @@ Feature: MyProfile
     Given I am logged in as "student"
      And I close new feature popup if needed
     When I click on "My Profile" tool
-     And I should see my name "TesterWP F Tester" under My Profile tab
+     And I should see my name under My Profile tab
      And I should see "Pictures" tab
      And I should see "Connections" tab
      And I should see "Messages" tab

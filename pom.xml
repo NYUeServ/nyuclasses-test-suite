@@ -117,8 +117,7 @@
             <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
-
-
+        
         <!-- Web Driver Binary Manager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>

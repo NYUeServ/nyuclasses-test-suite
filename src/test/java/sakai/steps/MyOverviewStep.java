@@ -14,10 +14,10 @@ public class MyOverviewStep extends BrowserAPI {
         this.browser = browser;
     }
 
-    @Then("^I should see \"([^\"]*)\" on home page$")
-    public void iShouldSee(String frameName) {
-        SakaiLogger.logInfo("Step: I should see \"" + frameName + "\" on home page");
-        browser.getHomePage().overview.checkForOverviewFrames(frameName);
+    @Then("^I should see various content on home page$")
+    public void iShouldSee() {
+        SakaiLogger.logInfo("Step: I should see various content on home page");
+        browser.getHomePage().overview.checkForContent();
     }
 
     @When("^I click on \"([^\"]*)\" tool$")

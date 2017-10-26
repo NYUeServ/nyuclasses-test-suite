@@ -12,6 +12,17 @@ Maven 3+, Java 8, Docker, Firefox, and Chrome
 
 [Download requirements](https://github.com/NYUeServ/nyuclasses-test-suite/wiki/System-Requirements)
 
+Modifications for Different Sakai Distributions
+---
+
+This test suite is aimed to be as generic and friendly to vanilla version of Sakai Community as possible; however, there are
+places that you may want to change to make this work for you and your Sakai distribution. The modifications needed include but
+are not limited to the following:
+
+- Login Page
+- Assignment Page
+- Custom Tools
+
 Running with Docker Script:
 ---
 We have made a script to run your very own instance of our test suite via docker. If you just want to run it
@@ -51,6 +62,7 @@ To run the test cases from a docker container, create a config.env file with the
 $ docker-compose build && docker-compose up
 ```
 The tests should execute and automate through your browsers in headless mode.
+
 
 Important Links
 ---
