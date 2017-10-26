@@ -38,11 +38,11 @@ public class AssignmentStep extends BrowserAPI {
         browser.getCoursePage().navigateToTab(tabName);
     }
 
-    @And("^I create a new assignment \"([^\"]*)\"$")
-    public void iCreateANewAssignment(String assignmentTitle)
+    @And("^I create a new assignment \"([^\"]*)\" with open date \"([^\"]*)\"$")
+    public void iCreateANewAssignment(String assignmentTitle, String openDate)
     {
         SakaiLogger.logInfo("Step: I create a new assignment \""+ assignmentTitle +"\"");
-        browser.getCoursePage().assignments.createNewAssignment(assignmentTitle +  " " + browser.getPlatform());
+        browser.getCoursePage().assignments.createNewAssignment(assignmentTitle +  " " + browser.getPlatform(),openDate);
     }
 
     @Then("^I should see \"([^\"]*)\"$")
@@ -57,7 +57,7 @@ public class AssignmentStep extends BrowserAPI {
     public void iSubmitMyAssignment(String assignmentTitle)
     {
         SakaiLogger.logInfo("Step: I submit my assignment \"" + assignmentTitle + "\"");
-        browser.getCoursePage().assignments.submitAssignment(assignmentTitle +  " " + browser.getPlatform());
+        browser.getCoursePage().assignments.submitInlineAssignment(assignmentTitle +  " " + browser.getPlatform());
     }
 
     @When("^I remove the assignment \"([^\"]*)\"$")
