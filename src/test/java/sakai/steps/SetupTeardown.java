@@ -6,9 +6,7 @@ import cucumber.api.java.Before;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -51,6 +49,11 @@ public class SetupTeardown extends BrowserAPI {
 
             //Setup global variables and page waiter
             WebDriver driver = new ChromeDriver(options);
+
+            //Set screen aspect ratio, screenshots on failure would be more useful this way
+            driver.manage().window().setPosition(new Point(0,0));
+            driver.manage().window().setSize(new Dimension(1920,1080));
+
             browser.setDriver(driver);
             PageWaiter.setDriver(driver, "chrome");
         }
@@ -67,6 +70,11 @@ public class SetupTeardown extends BrowserAPI {
 
             //Setup global variables and page waiter
             WebDriver driver = new FirefoxDriver(options);
+
+            //Set screen aspect ratio, screenshots on failure would be more useful this way
+            driver.manage().window().setPosition(new Point(0,0));
+            driver.manage().window().setSize(new Dimension(1920,1080));
+
             browser.setDriver(driver);
             PageWaiter.setDriver(driver, "firefox");
         }

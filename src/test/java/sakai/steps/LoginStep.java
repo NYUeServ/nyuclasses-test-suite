@@ -33,7 +33,14 @@ public class LoginStep extends BrowserAPI {
         SakaiLogger.logInfo("Step: I login as student");
         HomePage home = browser.getLoginPage().loginAsStudent();
         browser.setHomePage(home);
+    }
 
+    @When("^I login as instructor$")
+    public void iLoginAsInstructor()
+    {
+        SakaiLogger.logInfo("Step: I login as instructor");
+        HomePage home = browser.getLoginPage().loginAsInstructor();
+        browser.setHomePage(home);
     }
 
     @And("^I close new feature popup if needed$")
@@ -49,11 +56,14 @@ public class LoginStep extends BrowserAPI {
         browser.getHomePage().checkForSakaiBanner();
     }
 
-    @Given("^I am logged in$")
-    public void iAmLoggedIn() {
-        SakaiLogger.logInfo("Step: Given I am logged in");
+    @Given("^I am logged in as \"([^\"]*)\"$")
+    public void iAmLoggedIn(String user) {        
+        SakaiLogger.logInfo("Step: Given I am logged in as \"" + user + "\"");
         iNavigateToTheLoginPage();
-        iLoginAsStudent();
+        if(user.equals("student"))
+            iLoginAsStudent();
+        else if(user.equals("instructor"))
+            iLoginAsInstructor();
     }
 
     @When("^I log out$")

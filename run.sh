@@ -77,12 +77,18 @@ if [[ "$clean" = true ]]; then
 	docker-compose rm -fs
 	docker-machine stop cucumber
 	docker-machine rm -y cucumber
+
+	echo "Using $driver driver to run the docker machine"
+	docker-machine create --driver "$driver" cucumber
+	echo "Regenerating certs to re-establish connection to docker machine"
+	echo "Please accept prompt!!!"
+	docker-machine regenerate-certs cucumber
+else
+    #Create docker machine with specified driver
+    echo "Using $driver driver to run the docker machine"
+    docker-machine create --driver "$driver" cucumber
 fi 
 
-echo "Using $driver driver to run the docker machine"
-
-#Create docker machine with specified driver
-docker-machine create --driver "$driver" cucumber
 if [ $? -ne 0 ]; then
 	docker-machine start cucumber
 fi
@@ -99,7 +105,7 @@ else
 fi
 
 #If run flag is not specified, then stop
-if  [ -z "$run_docker" ]; then
+if  [[ "$run_docker" = false ]]; then
 	docker-machine stop cucumber
 	exit 0;
 fi
@@ -114,8 +120,12 @@ if [[ "$report" = true ]] && [[ "$run_docker" = true ]]; then
 	rm -rf "report-firefox"
 	echo "Retrieving new chrome test reports"
 	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/cucumber-html-reports ./report-chrome
+	echo "Attempts to retrieve chrome failure screenshots, this step may fail if tests are completed successfully..."
+	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/screenshot ./report-chrome/screenshot
 	echo "Retrieving new firefox test reports"
 	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/cucumber-html-reports ./report-firefox
+	echo "Attempts to retrieve firefox failure screenshots, this step may fail if tests are completed successfully..."
+	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/screenshot ./report-firefox/screenshot
 fi 
 
 docker-machine stop cucumber
