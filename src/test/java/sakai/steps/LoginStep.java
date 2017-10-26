@@ -43,6 +43,14 @@ public class LoginStep extends BrowserAPI {
         browser.setHomePage(home);
     }
 
+    @When("^I login as teaching assistant$")
+    public void iLoginAsTeachingAssistant()
+    {
+        SakaiLogger.logInfo("Step: I login as teaching assistant");
+        HomePage home = browser.getLoginPage().loginAsTeachingAssistant();
+        browser.setHomePage(home);
+    }
+
     @And("^I close new feature popup if needed$")
     public void iCloseWhatSNewPopupIfNeeded()
     {
@@ -64,6 +72,8 @@ public class LoginStep extends BrowserAPI {
             iLoginAsStudent();
         else if(user.equals("instructor"))
             iLoginAsInstructor();
+        else if(user.equals("teaching assistant"))
+            iLoginAsTeachingAssistant();
     }
 
     @When("^I log out$")
