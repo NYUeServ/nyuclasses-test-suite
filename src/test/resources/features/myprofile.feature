@@ -1,8 +1,9 @@
+@profile @all
 Feature: MyProfile
   This feature tests the functionality of My Profile tool once logged in to Sakai
 
   Scenario: My Profile overview
-    Given I am logged in
+    Given I am logged in as "student"
      And I close new feature popup if needed
     When I click on "My Profile" tool
      And I should see my name "TesterWP F Tester" under My Profile tab
