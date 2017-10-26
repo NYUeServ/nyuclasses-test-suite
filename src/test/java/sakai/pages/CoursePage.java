@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
 import sakai.pages.tools.course.*;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
-import org.openqa.selenium.support.ui.Select;
 
 public class CoursePage extends BasePage {
 
@@ -49,6 +49,7 @@ public class CoursePage extends BasePage {
         SakaiLogger.logDebug("Navigating to course page...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
+        //ToDo: Remove hardcoded course site title
         By courseSelector = By.xpath("//*[@id=\"topnav\"]/li/a[@title='Cucumber Test Site']");
         WebElement course = wait.until(ExpectedConditions.presenceOfElementLocated(courseSelector));
         course.click();

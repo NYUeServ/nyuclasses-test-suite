@@ -1,14 +1,14 @@
 package sakai.pages.tools.course;
 
-import org.openqa.selenium.WebDriver;
 import sakai.pages.CoursePage;
 import sakai.pages.tools.Tool;
+import sakai.utilities.PageWaiter;
+import sakai.utilities.SakaiLogger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import sakai.utilities.PageWaiter;
-import sakai.utilities.SakaiLogger;
 import org.openqa.selenium.support.ui.Select;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
