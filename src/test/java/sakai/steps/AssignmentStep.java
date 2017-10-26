@@ -11,8 +11,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static org.junit.Assert.assertTrue;
-
 public class AssignmentStep extends BrowserAPI {
 
     private BrowserAPI browser;
@@ -45,13 +43,6 @@ public class AssignmentStep extends BrowserAPI {
         browser.getCoursePage().assignments.createNewAssignment(assignmentTitle +  " " + browser.getPlatform(),openDate);
     }
 
-    @Then("^I should see \"([^\"]*)\"$")
-    public void iShouldSee(String needle)
-    {
-        SakaiLogger.logInfo("Step: I should see \""+ needle + "\"");
-        List<WebElement> list = browser.getDriver().findElements(By.xpath("//*[contains(text(),'" + needle + "')]"));
-        assertTrue("Text not found!", list.size() > 0);
-    }
 
     @When("^I submit my assignment \"([^\"]*)\"$")
     public void iSubmitMyAssignment(String assignmentTitle)
