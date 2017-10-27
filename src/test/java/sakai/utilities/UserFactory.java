@@ -1,16 +1,16 @@
 package sakai.utilities;
 
-import sakai.utilities.api.SettingsAPI;
+import sakai.utilities.api.Config;
 
 public class UserFactory {
 
-    private static SettingsAPI settings;
+    private static Config config;
     public static User instructor;
     public static User student;
     public static User ta;
 
-    public UserFactory(SettingsAPI settings){
-        this.settings = settings;
+    public UserFactory(Config config){
+        this.config = config;
         instructor = getValidInstructor();
         student = getValidStudent();
         ta = getValidTeachingAssistant();
@@ -18,21 +18,21 @@ public class UserFactory {
 
     public static User getValidStudent(){
         User user = new User();
-        user.withUsername(settings.getStudentUsername()).withPassword(settings.getStudentPassword())
+        user.withUsername(config.getStudentUsername()).withPassword(config.getStudentPassword())
                 .withRole("Student");
         return user;
     }
 
     public static User getValidInstructor(){
         User user = new User();
-        user.withUsername(settings.getInstructorUsername()).withPassword(settings.getInstructorPassword())
+        user.withUsername(config.getInstructorUsername()).withPassword(config.getInstructorPassword())
                 .withRole("Instructor");
         return user;
     }
 
     public static User getValidTeachingAssistant(){
         User user = new User();
-        user.withUsername(settings.getTeachingAssistantUsername()).withPassword(settings.getTeachingAssistantPassword())
+        user.withUsername(config.getTeachingAssistantUsername()).withPassword(config.getTeachingAssistantPassword())
                 .withRole("Teaching Assistant");
         return user;
     }

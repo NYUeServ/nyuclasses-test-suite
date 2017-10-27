@@ -14,8 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
-import sakai.utilities.api.BrowserAPI;
-import sakai.utilities.api.SettingsAPI;
+import sakai.utilities.api.Browser;
+import sakai.utilities.api.Config;
 
 
 import java.io.File;
@@ -24,15 +24,15 @@ import java.util.Date;
 
 import static org.junit.Assert.fail;
 
-public class SetupTeardown extends BrowserAPI {
+public class SetupTeardown extends Browser {
 
-    private BrowserAPI browser;
-    private SettingsAPI settings;
+    private Browser browser;
+    private Config config;
 
-    public SetupTeardown(BrowserAPI browser, SettingsAPI settings)
+    public SetupTeardown(Browser browser, Config config)
     {
         this.browser = browser;
-        this.settings = settings;
+        this.config = config;
     }
 
     @Before
@@ -40,7 +40,7 @@ public class SetupTeardown extends BrowserAPI {
     {
         SakaiLogger.logInfo("=========== Starting (" + scenario.getName() + ") Scenario ===========");
         browser.setPlatform(System.getenv("sakai_browser"));
-        settings.loadSettings();
+        config.loadSettings();
 
         if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("chrome"))
         {

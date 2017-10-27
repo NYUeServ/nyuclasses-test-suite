@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * This class manages the environment variables of the test suite
  */
-public class SettingsAPI {
+public class Config {
 
     private Map<String, String> settings;
 

@@ -14,7 +14,7 @@ import sakai.pages.CoursePage;
  *
  * This class manages the current active page objects throughout the test suite
  */
-public class BrowserAPI {
+public class Browser {
 
     private String platform;
     private WebDriver driver;

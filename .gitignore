@@ -3,5 +3,5 @@ target/
 report-chrome/
 report-firefox/
 config.env
-settings.yml
+config.yml
 *.iml

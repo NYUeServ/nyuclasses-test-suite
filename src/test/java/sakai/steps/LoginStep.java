@@ -1,32 +1,31 @@
 package sakai.steps;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
 import sakai.utilities.UserFactory;
-import sakai.utilities.api.BrowserAPI;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
-import sakai.utilities.api.SettingsAPI;
+import sakai.utilities.api.Config;
 
-public class LoginStep extends BrowserAPI {
+public class LoginStep extends Browser {
 
-    private BrowserAPI browser;
-    private SettingsAPI settings;
+    private Browser browser;
+    private Config config;
 
-    public LoginStep(BrowserAPI browser, SettingsAPI settings)
+    public LoginStep(Browser browser, Config config)
     {
         this.browser = browser;
-        this.settings = settings;
+        this.config = config;
     }
 
     @Given("^I navigate to the login page$")
     public void iNavigateToTheLoginPage()
     {
         SakaiLogger.logInfo("Step: I navigate to the login page");
-        LoginPage login = new LoginPage(browser.getDriver(), settings.getLoginPageUrl()).navigateToPage();
+        LoginPage login = new LoginPage(browser.getDriver(), config.getLoginPageUrl()).navigateToPage();
         browser.setLoginPage(login);
 
     }

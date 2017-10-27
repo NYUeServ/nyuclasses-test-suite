@@ -1,15 +1,14 @@
 package sakai.steps;
 
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import sakai.utilities.api.BrowserAPI;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
 
-public class MyOverviewStep extends BrowserAPI {
+public class MyOverviewStep extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
 
-    public MyOverviewStep(BrowserAPI browser)
+    public MyOverviewStep(Browser browser)
     {
         this.browser = browser;
     }
