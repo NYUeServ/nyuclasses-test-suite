@@ -28,7 +28,7 @@ Feature: Assignment
 		Given I am logged in as "instructor"
 		And I close new feature popup if needed
 		And I navigate to "Cucumber Test Site" course site
-		When I click on "Assignments" tool 
+		When I click on "Assignments" tool
 		When I remove the assignment "New Test Assignment"
 		When I log out
 		Then I should see logged out 
