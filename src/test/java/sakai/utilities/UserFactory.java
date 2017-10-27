@@ -12,4 +12,10 @@ public class UserFactory {
         user.withUsername(System.getenv("sakai_instructor_username")).withPassword(System.getenv("sakai_instructor_password"));
         return user;
     }
+
+    public static User getValidTeachingAssistant(){
+        User user = new User();
+        user.withUsername(System.getenv("sakai_teaching_assistant_username")).withPassword(System.getenv("sakai_teaching_assistant_password"));
+        return user;
+    }
 }
