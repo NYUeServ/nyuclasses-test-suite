@@ -1,0 +1,11 @@
+login_page: https://newclasses.nyu.edu
+course_site: Cucumber Test Site
+
+instructor_account_username: USERNAME HERE
+instructor_account_password: PASSWORD HERE
+
+student_account_username: USERNAME HERE
+student_account_password: PASSWORD HERE
+
+ta_account_username: USERNAME HERE
+ta_account_password: PASSWORD HERE

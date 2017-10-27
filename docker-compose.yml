@@ -7,8 +7,6 @@ services:
             dockerfile: Dockerfile-chrome
         environment: 
             - sakai_browser=chrome
-        env_file:
-            - config.env
         entrypoint: mvn clean verify
         
 
@@ -18,6 +16,4 @@ services:
             dockerfile: Dockerfile-firefox
         environment: 
             - sakai_browser=firefox
-        env_file:
-            - config.env
         entrypoint: mvn clean verify

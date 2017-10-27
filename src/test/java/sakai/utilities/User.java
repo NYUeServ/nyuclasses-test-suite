@@ -3,6 +3,7 @@ package sakai.utilities;
 public class User {
     private String netid;
     private String password;
+    private String role;
 
     public User withUsername(String netid){
         this.netid = netid;
@@ -13,12 +14,22 @@ public class User {
         return netid;
     }
 
-    public void withPassword(String password){
+    public User withPassword(String password){
         this.password = password;
+        return this;
     }
 
     public String getPassword(){
         return password;
+    }
+
+    public User withRole(String role){
+        this.role = role;
+        return this;
+    }
+
+    public String getRole(){
+        return role;
     }
 
 }

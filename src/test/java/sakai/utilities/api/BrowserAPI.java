@@ -1,4 +1,4 @@
-package sakai.utilities;
+package sakai.utilities.api;
 
 import org.openqa.selenium.WebDriver;
 import sakai.pages.BasePage;
@@ -11,6 +11,8 @@ import sakai.pages.CoursePage;
  * An instance of this class will be passed to all step definitions so they are using the same page resources
  *
  * The setters of this class will also return a copy of what is set, for the sake of easier chaining commands
+ *
+ * This class manages the current active page objects throughout the test suite
  */
 public class BrowserAPI {
 
