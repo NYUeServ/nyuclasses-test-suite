@@ -9,7 +9,7 @@ Feature: Assignment
 		When I click on "Assignments" tool
 		And I navigate to the "Add" tab
 		And I create a new assignment "New Test Assignment" with open date "10/23/2017"
-		Then I should see "New Test Assignment"
+		Then I should see "New Test Assignment" on the page
 		When I log out
 		Then I should see logged out
 
@@ -18,9 +18,9 @@ Feature: Assignment
 		And I close new feature popup if needed
 		And I navigate to "Cucumber Test Site" course site
 		When I click on "Assignments" tool
-		Then I should see "New Test Assignment"
+		Then I should see "New Test Assignment" on the page
 		When I submit my assignment "New Test Assignment"
-		Then I should see "You have successfully submitted your work."
+		Then I should see "You have successfully submitted your work." on the page
 		When I log out
 		Then I should see logged out
 

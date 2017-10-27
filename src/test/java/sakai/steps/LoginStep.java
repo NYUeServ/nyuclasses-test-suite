@@ -51,19 +51,6 @@ public class LoginStep extends BrowserAPI {
         browser.setHomePage(home);
     }
 
-    @And("^I close new feature popup if needed$")
-    public void iCloseWhatSNewPopupIfNeeded()
-    {
-        SakaiLogger.logInfo("Step: I close new feature popup if needed");
-        browser.getHomePage().closeNewFeaturePopUp();
-    }
-
-    @Then("^I should see Sakai logo$")
-    public void iShouldSeeNYUClassesLogo() {
-        SakaiLogger.logInfo("Step: I should see Sakai logo");
-        browser.getHomePage().checkForSakaiBanner();
-    }
-
     @Given("^I am logged in as \"([^\"]*)\"$")
     public void iAmLoggedIn(String user) {        
         SakaiLogger.logInfo("Step: Given I am logged in as \"" + user + "\"");
