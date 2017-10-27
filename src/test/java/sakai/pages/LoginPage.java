@@ -87,6 +87,10 @@ public class LoginPage extends BasePage {
         password.sendKeys(teachingAssistant.getPassword());
         login.click();
         SakaiLogger.logDebug("Login request submitted");
+
+        PageWaiter.waitUntilPageReady();
+        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
+
         return new HomePage(driver);
     }
 
