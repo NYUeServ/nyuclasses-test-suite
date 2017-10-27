@@ -1,14 +1,14 @@
 package sakai.pages.tools.course;
 
-import org.openqa.selenium.WebDriver;
 import sakai.pages.CoursePage;
 import sakai.pages.tools.Tool;
+import sakai.utilities.PageWaiter;
+import sakai.utilities.SakaiLogger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import sakai.utilities.PageWaiter;
-import sakai.utilities.SakaiLogger;
 import org.openqa.selenium.support.ui.Select;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,16 +28,13 @@ public class Assignments extends Tool{
         this.navigateToToolWithName("Assignments");
     }
     
-    public void createNewAssignment(String assignmentTitle)
+    public void createNewAssignment(String assignmentTitle, String openDateValue)
     {
         SakaiLogger.logDebug("Creating a new Assignment...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
         WebElement title = driver.findElement(By.id("new_assignment_title"));
         title.sendKeys(assignmentTitle);
-        LocalDate yesterday = LocalDate.now().minusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String openDateValue = yesterday.format(formatter);
         WebElement openDate = driver.findElement(By.id("opendate"));
         openDate.clear();
         openDate.sendKeys(openDateValue);
@@ -47,7 +44,6 @@ public class Assignments extends Tool{
         {
             done.click();
         }
-        SakaiLogger.logInfo("The Open Date is set to " + openDate.getAttribute("value"));
         WebElement allowResToggle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("allowResToggle")));
         if ( !allowResToggle.isSelected() )
         {
@@ -80,7 +76,7 @@ public class Assignments extends Tool{
         delete.click();
     } 
 
-    public void submitAssignment(String assignmentTitle) 
+    public void submitInlineAssignment(String assignmentTitle) 
     {
         SakaiLogger.logDebug("Submitting the Assignment...");
         PageWaiter.waitUntilPageReady();

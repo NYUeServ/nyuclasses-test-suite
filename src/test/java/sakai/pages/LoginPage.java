@@ -73,6 +73,23 @@ public class LoginPage extends BasePage {
         return new HomePage(driver);
     }
 
+    public HomePage loginAsTeachingAssistant()
+    {
+        SakaiLogger.logDebug("Finding Web Elements on page...");
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
+        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
+        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
+
+        User teachingAssistant = UserFactory.getValidTeachingAssistant();
+        SakaiLogger.logDebug("Logging into Teaching Assistant account with username: " + teachingAssistant.getUsername() + ", password: " + teachingAssistant.getPassword());
+        username.sendKeys(teachingAssistant.getUsername());
+        password.sendKeys(teachingAssistant.getPassword());
+        login.click();
+        SakaiLogger.logDebug("Login request submitted");
+        return new HomePage(driver);
+    }
+
     public void checkForLoggedOutBanner()
     {
         SakaiLogger.logDebug("Finding Web Elements on page...");
