@@ -28,6 +28,10 @@ public class Config {
                 Yaml yaml = new Yaml();
                 settings = yaml.load(new FileInputStream(settingFile));
             }
+            else{
+                SakaiLogger.logErr("Configuration file not found, exiting system status 0");
+                System.exit(0);
+            }
         }catch(FileNotFoundException e){
             SakaiLogger.logErr("Configuration file not found, exiting system status 0");
             System.exit(0);
