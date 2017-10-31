@@ -66,7 +66,7 @@ public class HomePage extends BasePage{
 
     }
 
-    public LoginPage logout()
+    public void logout()
     {
         SakaiLogger.logDebug("Finding Web Elements on page...");
         PageWaiter.waitUntilPageReady();
@@ -83,8 +83,6 @@ public class HomePage extends BasePage{
         profile.click();
         SakaiLogger.logDebug("Clicking on Log Out...");
         logout.click();
-
-        return new LoginPage(driver);
     }
 
 }

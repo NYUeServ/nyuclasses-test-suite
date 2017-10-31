@@ -3,22 +3,22 @@ package sakai.steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import sakai.utilities.BrowserAPI;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
 
-public class MyProfileStep extends BrowserAPI {
+public class MyProfileStep extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
 
-    public MyProfileStep(BrowserAPI browser)
+    public MyProfileStep(Browser browser)
     {
         this.browser = browser;
     }
 
-    @And("^I should see my name \"([^\"]*)\" under My Profile tab$")
-    public void iShouldSeeMyNameUnderMyProfileTab(String name){
-        SakaiLogger.logInfo("Step: I should see my name \"" + name + "\" under My Profile tab");
-        browser.getHomePage().profile.checkProfileName(name);
+    @And("^I should see my name under My Profile tab$")
+    public void iShouldSeeMyNameUnderMyProfileTab(){
+        SakaiLogger.logInfo("Step: I should see my name under My Profile tab");
+        browser.getHomePage().profile.checkProfileName();
     }
 
     @And("^I should see \"([^\"]*)\" tab$")

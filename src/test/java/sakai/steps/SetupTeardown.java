@@ -14,7 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
-import sakai.utilities.BrowserAPI;
+import sakai.utilities.api.Browser;
+import sakai.utilities.api.Config;
 
 
 import java.io.File;
@@ -23,13 +24,15 @@ import java.util.Date;
 
 import static org.junit.Assert.fail;
 
-public class SetupTeardown extends BrowserAPI {
+public class SetupTeardown extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
+    private Config config;
 
-    public SetupTeardown(BrowserAPI browser)
+    public SetupTeardown(Browser browser, Config config)
     {
         this.browser = browser;
+        this.config = config;
     }
 
     @Before
@@ -37,6 +40,7 @@ public class SetupTeardown extends BrowserAPI {
     {
         SakaiLogger.logInfo("=========== Starting (" + scenario.getName() + ") Scenario ===========");
         browser.setPlatform(System.getenv("sakai_browser"));
+        config.loadSettings();
 
         if(browser.getPlatform() != null && browser.getPlatform().equalsIgnoreCase("chrome"))
         {
@@ -52,7 +56,7 @@ public class SetupTeardown extends BrowserAPI {
 
             //Set screen aspect ratio, screenshots on failure would be more useful this way
             driver.manage().window().setPosition(new Point(0,0));
-            driver.manage().window().setSize(new Dimension(1920,1080));
+            driver.manage().window().setSize(new Dimension(1680,1050));
 
             browser.setDriver(driver);
             PageWaiter.setDriver(driver, "chrome");
@@ -73,7 +77,7 @@ public class SetupTeardown extends BrowserAPI {
 
             //Set screen aspect ratio, screenshots on failure would be more useful this way
             driver.manage().window().setPosition(new Point(0,0));
-            driver.manage().window().setSize(new Dimension(1920,1080));
+            driver.manage().window().setSize(new Dimension(1680,1050));
 
             browser.setDriver(driver);
             PageWaiter.setDriver(driver, "firefox");

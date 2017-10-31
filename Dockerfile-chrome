@@ -40,5 +40,3 @@ RUN mvn -version
 # Run a Virtual Buffer to be able to Display the chrome browser
 RUN Xvfb :99 -screen 0 1680x1050x24 &
 RUN export DISPLAY=:99
-
-ENTRYPOINT ["mvn", "clean", "verify"]

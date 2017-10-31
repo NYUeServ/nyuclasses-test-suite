@@ -94,6 +94,13 @@
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.19</version>
+        </dependency>
+
 
         <!-- Logger required by Chrome Driver -->
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
@@ -117,7 +124,6 @@
             <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
-
 
         <!-- Web Driver Binary Manager -->
         <dependency>

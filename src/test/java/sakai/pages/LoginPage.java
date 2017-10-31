@@ -12,26 +12,28 @@ import static org.junit.Assert.assertTrue;
 
 public class LoginPage extends BasePage {
 
+    private String loginURL;
     private final By usernameFieldSelector = By.name("j_username");
     private final By passwordFieldSelector = By.name("j_password");
     private final By loginButtonSelector = By.name("_eventId_proceed");
     private final By logoutBannerSelector = By.className("logout");
 
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver, String loginURL) {
         super(driver);
+        this.loginURL = loginURL;
     }
 
     @Override
     public LoginPage navigateToPage()
     {
-        driver.navigate().to("https://newclasses.nyu.edu");
+        driver.navigate().to(loginURL);
         PageWaiter.waitUntilPageReady();
         assertEquals("NYU Login", driver.getTitle());
         return this;
     }
 
 
-    public HomePage loginAsStudent()
+    public HomePage loginAsUser(User user)
     {
         SakaiLogger.logDebug("Finding Web Elements on page...");
         WebDriverWait wait = new WebDriverWait(driver,10);
@@ -39,52 +41,9 @@ public class LoginPage extends BasePage {
         WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
         WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
 
-        User student = UserFactory.getValidStudent();
-        SakaiLogger.logDebug("Logging into Student account with username: " + student.getUsername() + ", password: " + student.getPassword());
-        username.sendKeys(student.getUsername());
-        password.sendKeys(student.getPassword());
-        login.click();
-        SakaiLogger.logDebug("Login request submitted");
-
-        PageWaiter.waitUntilPageReady();
-        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
-
-        return new HomePage(driver);
-    }
-
-    public HomePage loginAsInstructor()
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
-        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
-        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
-
-        User instructor = UserFactory.getValidInstructor();
-        SakaiLogger.logDebug("Logging into Instructor account with username: " + instructor.getUsername() + ", password: " + instructor.getPassword());
-        username.sendKeys(instructor.getUsername());
-        password.sendKeys(instructor.getPassword());
-        login.click();
-        SakaiLogger.logDebug("Login request submitted");
-
-        PageWaiter.waitUntilPageReady();
-        assertEquals("NYU Classes : My Workspace : Overview", driver.getTitle());
-
-        return new HomePage(driver);
-    }
-
-    public HomePage loginAsTeachingAssistant()
-    {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        WebElement username = wait.until(ExpectedConditions.presenceOfElementLocated(usernameFieldSelector));
-        WebElement password = wait.until(ExpectedConditions.presenceOfElementLocated(passwordFieldSelector));
-        WebElement login = wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonSelector));
-
-        User teachingAssistant = UserFactory.getValidTeachingAssistant();
-        SakaiLogger.logDebug("Logging into Teaching Assistant account with username: " + teachingAssistant.getUsername() + ", password: " + teachingAssistant.getPassword());
-        username.sendKeys(teachingAssistant.getUsername());
-        password.sendKeys(teachingAssistant.getPassword());
+        SakaiLogger.logDebug("Logging into " + user.getRole() + " account with username: " + user.getUsername() + ", password: " + user.getPassword());
+        username.sendKeys(user.getUsername());
+        password.sendKeys(user.getPassword());
         login.click();
         SakaiLogger.logDebug("Login request submitted");
 

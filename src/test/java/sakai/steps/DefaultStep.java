@@ -1,25 +1,20 @@
 package sakai.steps;
 
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import sakai.pages.HomePage;
-import sakai.pages.LoginPage;
-import sakai.pages.CoursePage;
-import sakai.utilities.BrowserAPI;
-import sakai.utilities.SakaiLogger;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import static org.junit.Assert.assertTrue;
 
-public class DefaultStep extends BrowserAPI {
+public class DefaultStep extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
 
-    public DefaultStep(BrowserAPI browser)
+    public DefaultStep(Browser browser)
     {
         this.browser = browser;
     }

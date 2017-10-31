@@ -1,28 +1,31 @@
 package sakai.steps;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sakai.pages.HomePage;
 import sakai.pages.LoginPage;
-import sakai.utilities.BrowserAPI;
+import sakai.utilities.UserFactory;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
+import sakai.utilities.api.Config;
 
-public class LoginStep extends BrowserAPI {
+public class LoginStep extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
+    private Config config;
 
-    public LoginStep(BrowserAPI browser)
+    public LoginStep(Browser browser, Config config)
     {
         this.browser = browser;
+        this.config = config;
     }
 
     @Given("^I navigate to the login page$")
     public void iNavigateToTheLoginPage()
     {
         SakaiLogger.logInfo("Step: I navigate to the login page");
-        LoginPage login = new LoginPage(browser.getDriver()).navigateToPage();
+        LoginPage login = new LoginPage(browser.getDriver(), config.getLoginPageUrl()).navigateToPage();
         browser.setLoginPage(login);
 
     }
@@ -31,7 +34,7 @@ public class LoginStep extends BrowserAPI {
     public void iLoginAsStudent()
     {
         SakaiLogger.logInfo("Step: I login as student");
-        HomePage home = browser.getLoginPage().loginAsStudent();
+        HomePage home = browser.getLoginPage().loginAsUser(UserFactory.getValidStudent());
         browser.setHomePage(home);
     }
 
@@ -39,7 +42,7 @@ public class LoginStep extends BrowserAPI {
     public void iLoginAsInstructor()
     {
         SakaiLogger.logInfo("Step: I login as instructor");
-        HomePage home = browser.getLoginPage().loginAsInstructor();
+        HomePage home = browser.getLoginPage().loginAsUser(UserFactory.getValidInstructor());
         browser.setHomePage(home);
     }
 
@@ -47,7 +50,7 @@ public class LoginStep extends BrowserAPI {
     public void iLoginAsTeachingAssistant()
     {
         SakaiLogger.logInfo("Step: I login as teaching assistant");
-        HomePage home = browser.getLoginPage().loginAsTeachingAssistant();
+        HomePage home = browser.getLoginPage().loginAsUser(UserFactory.getValidTeachingAssistant());
         browser.setHomePage(home);
     }
 
@@ -66,8 +69,7 @@ public class LoginStep extends BrowserAPI {
     @When("^I log out$")
     public void iLogOut() {
         SakaiLogger.logInfo("Step: When I log out from home page");
-        LoginPage login = browser.getHomePage().logout();
-        browser.setLoginPage(login);
+        browser.getHomePage().logout();
     }
 
     @Then("^I should see logged out$")

@@ -16,6 +16,6 @@ public class Settings extends Tool{
 
     public void navigate()
     {
-        this.navigateToToolWithName("Settings");
+        this.navigateToToolWithName("Config");
     }
 }

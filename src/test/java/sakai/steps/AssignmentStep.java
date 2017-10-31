@@ -1,21 +1,16 @@
 package sakai.steps;
 
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import sakai.pages.HomePage;
 import sakai.pages.CoursePage;
-import sakai.utilities.BrowserAPI;
+import sakai.utilities.api.Browser;
 import sakai.utilities.SakaiLogger;
-import java.util.List;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-public class AssignmentStep extends BrowserAPI {
+public class AssignmentStep extends Browser {
 
-    private BrowserAPI browser;
+    private Browser browser;
 
-    public AssignmentStep(BrowserAPI browser)
+    public AssignmentStep(Browser browser)
     {
         this.browser = browser;
     }

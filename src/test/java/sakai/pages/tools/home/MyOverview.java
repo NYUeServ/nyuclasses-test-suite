@@ -10,7 +10,7 @@ import sakai.pages.tools.Tool;
 import sakai.utilities.PageWaiter;
 import sakai.utilities.SakaiLogger;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MyOverview extends Tool{
 
@@ -29,14 +29,14 @@ public class MyOverview extends Tool{
         this.navigateToToolWithName("Overview");
     }
 
-    public void checkForOverviewFrames(String widgetName)
+    public void checkForContent()
     {
-        SakaiLogger.logDebug("Finding Web Elements on page...");
+        SakaiLogger.logDebug("Finding content information page...");
         PageWaiter.waitUntilPageReady();
         WebDriverWait wait = new WebDriverWait(driver,10);
-        By widgetTitleSelector = By.xpath("//div/nav/h2[. = '" + widgetName + "']");
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(widgetTitleSelector));
-        assertEquals(widgetName, element.getAttribute("innerText"));
+        By contentSelector = By.id("content");
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(contentSelector));
+        assertTrue(element.isDisplayed());
     }
 
 }
