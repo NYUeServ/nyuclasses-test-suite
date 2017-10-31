@@ -1,7 +1,5 @@
 .idea/
 target/
-report-chrome/
-report-firefox/
 chrome-result/
 firefox-result/
 config.env
