@@ -6,4 +6,5 @@ chrome-result/
 firefox-result/
 config.env
 config.yml
+settings.yml
 *.iml
