@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+import static org.junit.Assert.fail;
+
 /**
  * This is the class used by cucumber picocontainer
  * An instance of this class will be passed to all step definitions so they are using the same page resources
@@ -30,11 +32,11 @@ public class Config {
             }
             else{
                 SakaiLogger.logErr("Configuration file not found, exiting system status 0");
-                System.exit(0);
+                fail("Configuration file not found, exiting system status 0");
             }
         }catch(FileNotFoundException e){
             SakaiLogger.logErr("Configuration file not found, exiting system status 0");
-            System.exit(0);
+            fail("Configuration file not found, exiting system status 0");
         }
 
         new UserFactory(this);
