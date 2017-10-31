@@ -5,6 +5,8 @@ services:
         build:
             context: ./
             dockerfile: Dockerfile-chrome
+        volumes:
+            - ./chrome-result:/test/result
         environment: 
             - sakai_browser=chrome
         entrypoint: mvn clean verify
@@ -14,6 +16,8 @@ services:
         build:
             context: ./
             dockerfile: Dockerfile-firefox
+        volumes:
+            - ./firefox-result:/test/result
         environment: 
             - sakai_browser=firefox
         entrypoint: mvn clean verify

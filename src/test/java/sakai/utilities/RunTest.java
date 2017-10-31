@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/",
         glue = "sakai/steps/",
-        format = "json:target/cucumber.json",
+        format = "json:result/cucumber.json",
         tags = {"@all"},
         monochrome = true
 )

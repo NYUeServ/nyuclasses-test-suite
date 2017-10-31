@@ -13,9 +13,9 @@ public class MyOverviewStep extends Browser {
         this.browser = browser;
     }
 
-    @Then("^I should see various content on home page$")
+    @Then("^I should see some content on home page$")
     public void iShouldSee() {
-        SakaiLogger.logInfo("Step: I should see various content on home page");
+        SakaiLogger.logInfo("Step: I should see some content on home page");
         browser.getHomePage().overview.checkForContent();
     }
 }

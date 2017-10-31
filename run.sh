@@ -17,7 +17,6 @@ usage () {
 	echo "-d  <driver>        Run docker with specified driver, defaults to virtualbox"
 	echo "-cr                 Cleans and runs the docker-machine"
 	echo "-br                 Rebuilds and runs docker images without cleaning"
-	echo "-p                  Runs docker image without fetching container report"
 	echo "-h                  Prints this thing again"
  }
 
@@ -52,9 +51,6 @@ do
 			#Build will not automatically run unless r flag is specified
 			build=true
 			run_docker=false
-			;;
-        p  ) 
-			report=false
 			;;
         h  ) usage; exit;;
         \? ) echo "Error: Unknown option: -$OPTARG" >&2; exit 1;;
@@ -111,22 +107,6 @@ if  [[ "$run_docker" = false ]]; then
 fi
 
 docker-compose up
-
-#Get HTML reports from docker containers
-if [[ "$report" = true ]] && [[ "$run_docker" = true ]]; then
-	echo "Deleting old chrome test reports"
-	rm -rf "report-chrome"
-	echo "Deleting old firefox test reports"
-	rm -rf "report-firefox"
-	echo "Retrieving new chrome test reports"
-	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/cucumber-html-reports ./report-chrome
-	echo "Attempts to retrieve chrome failure screenshots, this step may fail if tests are completed successfully..."
-	docker cp nyuclassestestsuite_cucumber_chrome_1:/test/target/screenshot ./report-chrome/screenshot
-	echo "Retrieving new firefox test reports"
-	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/cucumber-html-reports ./report-firefox
-	echo "Attempts to retrieve firefox failure screenshots, this step may fail if tests are completed successfully..."
-	docker cp nyuclassestestsuite_cucumber_firefox_1:/test/target/screenshot ./report-firefox/screenshot
-fi 
 
 docker-machine stop cucumber
 eval $(docker-machine env)			#Resume to default machine and exit

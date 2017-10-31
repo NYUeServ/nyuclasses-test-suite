@@ -14,8 +14,8 @@ public class RunReport {
     public void generateReport() {
         SakaiLogger.logInfo("Generating Cucumber HTML Report");
         List<String> jsonPaths = new ArrayList();
-        jsonPaths.add("target/cucumber.json");
-        Configuration config = new Configuration(new File("target"), "NYU Sakai Test Suite");
+        jsonPaths.add("result/cucumber.json");
+        Configuration config = new Configuration(new File("result"), "NYU Sakai Test Suite");
         ReportBuilder reportBuilder = new ReportBuilder(jsonPaths, config);
         reportBuilder.generateReports();
     }
